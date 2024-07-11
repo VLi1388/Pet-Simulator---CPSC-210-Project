@@ -1,6 +1,6 @@
 # My Personal Project: Pet Simulator
 
-This application allows a player to adopt pets, and take care of their pets by managing the status of their pets, as specified in the following:
+This application allows a player to adopt pets, and take care of their pets by managing the status of their pets. Detailed operations of the application is specified in the following:
 
 #### Possible features
 - The player can adopt a pet/new pet
