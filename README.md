@@ -8,7 +8,7 @@ This application allows a player to adopt pets, and take care of their pets by m
 - The player has a profile that documents their *currently owned pets*
 - Each pet has its own profile, which consists of *mood*, *hunger*, *thirst*, *accessories*, *discovered preferences*, and *location*
 - Interaction with pets: players can **feed**, **pet**, and **interact** (eg. play fetch) with pets
-- In game time system: pet status decreases as time passes. Players need to take action to restore stats
+- In game time system: pet status changes as time passes. Players need to take action to restore stats
 
 This game is intended to be used as a relaxation for anyone who needs a break from work or daily tasks. This project came to mind as I have always been interested in game development, and seeing this assignment, I thought it would be the perfect opportunity to explore and implement some of the game ideas I have had in mind already. 
 
