@@ -45,7 +45,7 @@ public class Player {
      * MODIFIES: this
      * EFFECTS: adds the given accesories to the list of already obtained accessories
      */
-    public void addAccesories(ArrayList<Accessory> newAccesories) {
+    public void addAccesory(ArrayList<Accessory> newAccesory) {
 
     }
 

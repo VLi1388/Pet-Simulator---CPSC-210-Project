@@ -16,5 +16,5 @@ This game is intended to be used as a relaxation for anyone who needs a break fr
 - As a user, I want to be able to add a pet to my collection of pets by specifying the name
 - As a user, I want to be able to view the list of pets I currently own
 - As a user, I want to be able to see a pets current status
-- As a user, I want to be able to equip my pet with an accessory and add that accessory to my pets profile
-- As a user, I want to be able to feed, pet, or interact with my pet, and see the changes be reflected in my pets status
+- As a user, I want to be able to equip my pet with accessories and add the accessories to my pets profile
+- As a user, I want to be able to feed or interact with my pet, and see the changes be reflected in my pets status
