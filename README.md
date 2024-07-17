@@ -4,7 +4,7 @@ This application allows a player to adopt pets, and take care of their pets by m
 
 #### Possible features
 - The player can adopt a pet/new pet
-- The player can have multiple pets, but they will start with only one pet 
+- The player can have up to three pets, but they will start with only one pet 
 - The player has a profile that documents their *currently owned pets*
 - Each pet has its own profile, which consists of *mood*, *hunger*, *thirst*, *accessories*, *discovered preferences*, and *location*
 - Interaction with pets: players can **feed**, **pet**, and **interact** (eg. play fetch) with pets
