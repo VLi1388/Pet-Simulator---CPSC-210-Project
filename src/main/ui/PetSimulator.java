@@ -283,6 +283,7 @@ public class PetSimulator {
         return droppedAccessory;
     }
 
+    // REQUIRES: selected accessories are within player.getObtainedAccessories();
     // MODIFIES: Player, Pet
     // EFFECTS: adds the selected accessories to the pets' equippedAccessories and removes the selected accessories
     //          from players' obtainedAccessories
@@ -310,6 +311,7 @@ public class PetSimulator {
         }
     }
 
+    // REQUIRES: selected accessories are within pet.getEquippedAccessories();
     // MODIFIES: Player, Pet
     // EFFECTS: removes the selected accessories to the pets' equippedAccessories and adds the selected accessories
     //          from players' obtainedAccessories
