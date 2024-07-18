@@ -10,14 +10,12 @@ public class Accessory {
     // TODO: give random effects to accessories
     // private String effect;
 
-    protected List<String> namesPool = Arrays.asList(new String[]{"Silver Pendant", 
+    private List<String> namesPool = Arrays.asList(new String[]{"Silver Pendant", 
                                                                 "Galaxy Hat", 
                                                                 "Red Bow Tie", 
                                                                 "B&W Socks",
                                                                 "Cowboy Hat"});
     // using fixed-sized arrays here as there should be a fixed pool to choose from
-    
-    //TODO: private List<Effect> effectsPool = new ArrayList<Effect>();
 
     // EFFECTS: creates an accessory with a random name selected from the names pool
     //

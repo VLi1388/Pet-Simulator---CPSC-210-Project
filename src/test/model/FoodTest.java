@@ -8,7 +8,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.*;
 
-public class FoodTest extends Food{
+public class FoodTest {
+    private List<String> namesPool = Arrays.asList(new String[]{"Fish", 
+                                                                "Pork", 
+                                                                "Beef", 
+                                                                "Chicken",
+                                                                "Lamb"});
+                                                                
     private Food testFood;
 
     @BeforeEach

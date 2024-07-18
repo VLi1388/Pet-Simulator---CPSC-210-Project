@@ -73,7 +73,7 @@ public class PetTest {
 
 
     @Test
-    void applyHungerDogByOne() {
+    void testApplyHungerDogByOne() {
         // remember default stat is 80
         dog.applyHunger(1);
         assertEquals(81, dog.getHunger());
@@ -81,7 +81,7 @@ public class PetTest {
     }
 
     @Test
-    void applyHungerDogBy100() {
+    void testApplyHungerDogBy100() {
         dog.setHunger(0);
         dog.applyHunger(100);
         assertEquals(100, dog.getHunger());
@@ -89,28 +89,28 @@ public class PetTest {
     }
 
     @Test
-    void applyHungerDogToBelow100() {
+    void testApplyHungerDogToBelow100() {
         dog.applyHunger(10);
         assertEquals(90, dog.getHunger());
         assertEquals(85, dog.getMood());
     }
 
     @Test
-    void applyHungerDogTo100() {
+    void testApplyHungerDogTo100() {
         dog.applyHunger(20);
         assertEquals(100, dog.getHunger());
         assertEquals(90, dog.getMood());
     }
     
     @Test
-    void applyHungerDogToOver100() {
+    void testApplyHungerDogToOver100() {
         dog.applyHunger(50);
         assertEquals(100, dog.getHunger());
         assertEquals(90, dog.getMood());
     }
     
     @Test
-    void applyHungerDogTwice() {
+    void testApplyHungerDogTwice() {
         dog.applyHunger(5);
         assertEquals(85, dog.getHunger());
         assertEquals(82, dog.getMood());
@@ -123,7 +123,7 @@ public class PetTest {
 
 
     @Test
-    void applyThisrtCatByOne() {
+    void testApplyThisrtCatByOne() {
         // remember default stat is 80
         cat.applyThirst(1);
         assertEquals(81, cat.getThirst());
@@ -131,7 +131,7 @@ public class PetTest {
     }
 
     @Test
-    void applyThisrtCatBy100() {
+    void testApplyThisrtCatBy100() {
         cat.setThirst(0);
         cat.applyThirst(100);
         assertEquals(100, cat.getThirst());
@@ -139,28 +139,28 @@ public class PetTest {
     }
 
     @Test
-    void applyThisrtCatToBelow100() {
+    void testApplyThisrtCatToBelow100() {
         cat.applyThirst(10);
         assertEquals(90, cat.getThirst());
         assertEquals(85, cat.getMood());
     }
 
     @Test
-    void applyThisrtCatTo100() {
+    void testApplyThisrtCatTo100() {
         cat.applyThirst(20);
         assertEquals(100, cat.getThirst());
         assertEquals(90, cat.getMood());
     }
     
     @Test
-    void applyThisrtCatToOver100() {
+    void testApplyThisrtCatToOver100() {
         cat.applyThirst(50);
         assertEquals(100, cat.getThirst());
         assertEquals(90, cat.getMood());
     }
     
     @Test
-    void applyThisrtCatTwice() {
+    void testApplyThisrtCatTwice() {
         cat.applyThirst(5);
         assertEquals(85, cat.getThirst());
         assertEquals(82, cat.getMood());
@@ -239,44 +239,91 @@ public class PetTest {
 
 
     @Test
-    void applyMoodDogByOne() {
+    void testApplyMoodDogByOne() {
         // remember default stat is 80
         dog.applyMood(1);
         assertEquals(81, dog.getMood());
     }
 
     @Test
-    void applyMoodDogBy100() {
+    void testApplyMoodDogBy100() {
         dog.setMood(0);
         dog.applyMood(100);
         assertEquals(100, dog.getMood());
     }
 
     @Test
-    void applyMoodDogToBelow100() {
+    void testApplyMoodDogToBelow100() {
         dog.applyMood(10);
         assertEquals(90, dog.getMood());
     }
 
     @Test
-    void applyMoodDogTo100() {
+    void testApplyMoodDogTo100() {
         dog.applyMood(20);
         assertEquals(100, dog.getMood());
     }
     
     @Test
-    void applyMoodDogToOver100() {
+    void testApplyMoodDogToOver100() {
         dog.applyMood(50);
         assertEquals(100, dog.getMood());
     }
     
     @Test
-    void applyMoodDogTwice() {
+    void testApplyMoodDogTwice() {
         dog.applyMood(5);
         assertEquals(85, dog.getMood());
 
         dog.applyMood(10);
         assertEquals(95, dog.getMood());
+    }
+
+
+
+    @Test
+    void testDecreaseMoodOnce() {
+        cat.decreaseMood();
+        assertEquals(79, cat.getMood());
+    }
+
+    @Test
+    void testDecreaseMoodTwice() {
+        cat.decreaseMood();
+        assertEquals(79, cat.getMood());
+
+        cat.decreaseMood();
+        assertEquals(78, cat.getMood());
+    }
+
+    @Test
+    void testDecreaseHungerOnce() {
+        cat.decreaseHunger();
+        assertEquals(79, cat.getHunger());
+    }
+
+    @Test
+    void testDecreaseHungerTwice() {
+        cat.decreaseHunger();
+        assertEquals(79, cat.getHunger());
+
+        cat.decreaseHunger();
+        assertEquals(78, cat.getHunger());
+    }
+
+    @Test
+    void testDecreaseThirstOnce() {
+        cat.decreaseThirst();
+        assertEquals(79, cat.getThirst());
+    }
+
+    @Test
+    void testDecreaseThirstTwice() {
+        cat.decreaseThirst();
+        assertEquals(79, cat.getThirst());
+
+        cat.decreaseThirst();
+        assertEquals(78, cat.getThirst());
     }
 
 

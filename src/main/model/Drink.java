@@ -9,7 +9,7 @@ public class Drink {
     private String name;
     private int thirst;
 
-    protected List<String> namesPool = Arrays.asList(new String[]{"Milk", 
+    private List<String> namesPool = Arrays.asList(new String[]{"Milk", 
                                                                 "Water", 
                                                                 "Vegetable Juice"});
     // using fixed-sized arrays here as there should be a fixed pool to choose from

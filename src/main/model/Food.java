@@ -9,7 +9,7 @@ public class Food {
     private String name;
     private int hunger;
 
-    protected List<String> namesPool = Arrays.asList(new String[]{"Fish", 
+    private List<String> namesPool = Arrays.asList(new String[]{"Fish", 
                                                                 "Pork", 
                                                                 "Beef", 
                                                                 "Chicken",

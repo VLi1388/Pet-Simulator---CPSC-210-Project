@@ -153,6 +153,12 @@ public class Pet {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: decrease mood by 1
+    public void decreaseMood() {
+        this.mood--;
+    }
+
     // REQUIRES: 0 < applyHungerVal <= 100
     // MODIFIES: this
     // EFFECTS: applies the given applyHungerVal to this pets' hunger, 
@@ -169,6 +175,12 @@ public class Pet {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: decrease hunger by 1
+    public void decreaseHunger() {
+        this.hunger--;
+    }
+
     // REQUIRES: 0 < applyThirstVal <= 100
     // MODIFIES: this
     // EFFECTS: applies the given applyThirstVal to this pets' thirst, 
@@ -183,6 +195,12 @@ public class Pet {
             this.thirst += applyThirstVal;
             updateMood();
         }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: decrease thirst by 1
+    public void decreaseThirst() {
+        this.thirst--;
     }
     
     // TODO: for future implementation, 

@@ -36,23 +36,12 @@ public class Player {
 
 
     /*
+     * REQUIRES: canAdopt() is true
      * MODIFIES: this
      * EFFECTS: adds the given pet to the list of owned pets.
-     *          If the player has no pet, always adopt the 
-     *          given pet;
-     *          If te player has at least one pet, call on canAdopt
-     *          // the player can only adopt one pet at a time;
-     *          // the player can own up to three pets
      */
     public void adoptPet(Pet newPet) {
-        if (ownedPets.size() == 0) {
-            ownedPets.add(newPet);
-        } else {
-            if (canAdopt()) {
-                ownedPets.add(newPet);
-            }
-        }
-        // only call on canAdopt when there is at least one current pet
+        ownedPets.add(newPet);
     }
 
     /* 
@@ -67,16 +56,18 @@ public class Player {
     }
 
     /*
-     * REQUIRES: ownedPets.size() > 0
-     * EFFECTS: returnes whether or not the player can adopt a new pet;
-     *          if all currently owned pets have mood, hunger, and thirst
+     * EFFECTS: returnes whether or not the player can adopt a new pet:
+     *          If all currently owned pets have mood, hunger, and thirst
      *          >= 90 AND ownedPets.size() < 3, then the player can adopt 
-     *          a new pet
+     *          a new pet;
+     *          If the player has no pet, return true
      */
     public boolean canAdopt() {
         // first check if we're at capaity of 3 pets
         if (ownedPets.size() == 3) {
             return false;
+        } else if (ownedPets.size() == 0) {
+            return true;
         } else {
             boolean allMeetingStat = true;
             for (Pet p : ownedPets) {
@@ -93,10 +84,14 @@ public class Player {
      * EFFECTS: adds the given accesories to the list of already obtained accessories
      */
     public void addAccesory(Accessory newAccesory) {
-        // since only one accessory will be droped at a time, addAccessory takes
-        // in a single Accessory object
-
         obtainedAccessories.add(newAccesory);
+    }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: removes the given accesories to the list of already obtained accessories
+     */
+    public void removeAccesory(Accessory newAccesory) {
+        obtainedAccessories.remove(newAccesory);
     }
 }

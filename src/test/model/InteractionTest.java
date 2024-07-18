@@ -1,5 +1,6 @@
 package model;
 
-public class InteractionTest extends Interaction{
+// this is a stub test class for Interaction
+public class InteractionTest {
 
 }
