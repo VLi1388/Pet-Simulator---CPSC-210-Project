@@ -9,7 +9,7 @@ public class Drink {
     private String name;
     private int thirst;
 
-    private List<String> namesPool = Arrays.asList(new String[]{"Milk", 
+    protected List<String> namesPool = Arrays.asList(new String[]{"Milk", 
                                                                 "Water", 
                                                                 "Vegetable Juice"});
     // using fixed-sized arrays here as there should be a fixed pool to choose from
@@ -17,7 +17,19 @@ public class Drink {
     // EFFECTS: creates a drink with a random name selected from the names pool
     //          and a random thirst between 1 and 100
     public Drink() {
+        Random rand = new Random();
+        int selectIndex = rand.nextInt(2);
 
+        this.name = namesPool.get(selectIndex);
+        this.thirst = rand.nextInt(99) + 1; // +1 to make it [1,100]
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public int getThirst() {
+        return this.thirst;
     }
 
 }

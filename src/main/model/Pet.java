@@ -11,9 +11,13 @@ public class Pet {
     private int thirst; // pet's thirst, out of 100
     private ArrayList<Accessory> equippedAccessories; // list of equipped accessories of the pet
 
-    private ArrayList<Food> preferredFood; // list of preferred food
-    private ArrayList<Drink> preferredDrinks; // list of preferred drinks
-    private ArrayList<Interaction> preferredInteractions; // list of preferred interactions
+    // pet location in the room
+    private int xCoord;
+    private int yCoord;
+
+    private ArrayList<Food> preferredFood = new ArrayList<>(); // list of preferred food
+    private ArrayList<Drink> preferredDrinks = new ArrayList<>(); // list of preferred drinks
+    private ArrayList<Interaction> preferredInteractions = new ArrayList<>(); // list of preferred interactions
 
     // private ArrayList<String> discoveredPreferences; // list of discovered preferences
     // remember to conver Food, Drink, Interaction objects to string using toString();
@@ -26,14 +30,26 @@ public class Pet {
      *                          hunger = 80, 
      *                          thirst = 80;
      *          initializes an empty list of equipped accessories
-     * 
-     *          // TODO: 
      *          initialzes a list of preferred food, drinks, and interactions, each consisting of 3 itmes,
      *          where items are selected by random from the corresponding class;
+     * 
+     *          // TODO: 
      *          initialzes an empty list of discovered preferences.
      */
     public Pet(String species, String name) {
-        
+        this.species = species;
+        this.name = name;
+        this.hunger = 80;
+        this.thirst = 80;
+        this.mood = (hunger + thirst) / 2;
+        this.equippedAccessories = new ArrayList<>();
+
+        // for now, default position at (0,0)
+        // TODO: for future implementations, give pet a random location at the start
+        this.xCoord = 0;
+        this.yCoord = 0;
+
+        generatePreferences();
     }
 
     // for future implementation, if I want to allow the player to
@@ -77,6 +93,23 @@ public class Pet {
         this.thirst = thirst;
     }
 
+    public int getXCoord() {
+        return this.xCoord;
+    }
+
+    // public void setXCoord(int xCoord) {
+    //     this.xCoord = xCoord;
+    // }
+
+    public int getYCoord() {
+        return this.yCoord;
+    }
+
+    // public void setYCoord(int yCoord) {
+    //     this.yCoord = yCoord;
+    // }
+
+
     public ArrayList<Accessory> getEquippedAccessories() {
         return this.equippedAccessories;
     }
@@ -94,28 +127,62 @@ public class Pet {
     }
 
     // MODIFIES: this
-    // EFFECTS: updates this pets' mood based on current hunger and thirst,
-    //          mood = (hunger + thirst) / 2 rounded down to nearest integer
+    // EFFECTS: updates this pets' mood based on current hunger and thirst
+    //          only if the newMood is larger than the current mood
+    //          mood is the average of hunger and thirst rounded down to 
+    //          nearest integer
     public void updateMood() {
-
+        int newMood = (hunger + thirst) / 2;
+        if (newMood > mood) {
+            this.mood = newMood;
+        }
     }
 
-    // REQUIRES: 0 < applyHunger <= 100
+    // REQUIRES: 0 < applyMoodVal <= 100
     // MODIFIES: this
-    // EFFECTS: applies the given applyHunger to this pets' hunger, 
+    // EFFECTS: applies the given applyMoodVal to this pets' mood, 
+    //          this pets' mood cannot go below 0 and cannot
+    //          go above 100;
+    public void applyMood(int applyMoodVal) {
+        // mood can also be directly modified, a change in hunger or thirst always changes mood,
+        // but a change in mood does not impact hunger or thirst
+        if ((this.mood + applyMoodVal) > 100) {
+            this.mood = 100;
+        } else {
+            this.mood += applyMoodVal;
+        }
+    }
+
+    // REQUIRES: 0 < applyHungerVal <= 100
+    // MODIFIES: this
+    // EFFECTS: applies the given applyHungerVal to this pets' hunger, 
     //          this pets' hunger cannot go below 0 and cannot
-    //          go above 100
-    public void applyHunger(int applyHunger) {
-
+    //          go above 100;
+    //          since hunger changed, mood should be updated
+    public void applyHunger(int applyHungerVal) {
+        if ((this.hunger + applyHungerVal) > 100) {
+            this.hunger = 100;
+            updateMood();
+        } else {
+            this.hunger += applyHungerVal;
+            updateMood();
+        }
     }
 
-    // REQUIRES: 0 < applyThirst <= 100
+    // REQUIRES: 0 < applyThirstVal <= 100
     // MODIFIES: this
-    // EFFECTS: applies the given applyThirst to this pets' thirst, 
+    // EFFECTS: applies the given applyThirstVal to this pets' thirst, 
     //          this pets' thirst cannot go below 0 and cannot
-    //          go above 100
-    public void applyThirst(int applyThirst) {
-
+    //          go above 100;
+    //          since thirst changed, mood should be updated
+    public void applyThirst(int applyThirstVal) {
+        if ((this.thirst + applyThirstVal) > 100) {
+            this.thirst = 100;
+            updateMood();
+        } else {
+            this.thirst += applyThirstVal;
+            updateMood();
+        }
     }
     
     // TODO: for future implementation, 
@@ -128,9 +195,20 @@ public class Pet {
     // EFFECTS: generates a list of preferred food, drinks, and interactions at ramdom,
     //          each consisting of 3
     public void generatePreferences() {
-        // this.preferredFood = ...
-        // this.preferredDrinks = ...
-        // this.preferredInteractions = ...
+        // food preferences
+        for (int i = 0; i < 3; i++) {
+            preferredFood.add(new Food());
+        }
+        
+        // drink preferences
+        for (int i = 0; i < 3; i++) {
+            preferredDrinks.add(new Drink());
+        }
+
+        // interaction preferences
+        for (int i = 0; i < 3; i++) {
+            preferredInteractions.add(new Interaction());
+        }
     }
 
     // REQUIRES: accessory.size() > 0
@@ -138,14 +216,22 @@ public class Pet {
     // EFFECTS: adds the given list of accessories to this pet's equippedAccessories
     //          in the order it was given, ignores any duplicates
     public void equipAccessories(List<Accessory> accessories) {
-        // use a for loop to merge the two lists
+        for (Accessory a : accessories) {
+            if (!equippedAccessories.contains(a)) {
+                equippedAccessories.add(a);
+            }
+        }
     }
 
     // REQUIRES: accessory.size() > 0; 
     //           all items in accessories already exsit in equippedAccessories
+    //           // UI would ask player to "select" accessories out of equipped accessories
+    //           // to unequip them, so it is assumed that the 2nd condition is met
     // MODIFIES: this
     // EFFECTS: removes the given list of accessories to this pet's equippedAccessories
     public void unequipAccessories(List<Accessory> accessories) {
-        // use a for loop to merge the two lists
+        for (Accessory a : accessories) {
+            equippedAccessories.remove(a);
+        }
     }
 }
