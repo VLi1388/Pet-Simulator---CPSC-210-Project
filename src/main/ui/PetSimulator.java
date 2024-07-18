@@ -40,7 +40,7 @@ public class PetSimulator {
 
     }
 
-    // MODIFIES: this
+    // MODIFIES: player, initialPet
     // EFFECTS: initializes the simulator by setting up a player profile
     private void createPlayerProfile() {
         System.out.println("What is your name?" );
@@ -78,7 +78,7 @@ public class PetSimulator {
     //     }
     // }
 
-    // MODIFIES: Pet
+    // MODIFIES: p
     // EFFECTS: decreases the pets' status
     private void decreasePetStatus() {
         for (Pet p : player.getOwnedPets()) {
@@ -167,6 +167,7 @@ public class PetSimulator {
         }
     }
 
+    // MODIFIES: player, newPet
     // EFFECTS: asks the player for a pet that they want to adopt, and adopt that pet
     private void adoptPet() {
         if (player.canAdopt() == false) {
@@ -235,6 +236,7 @@ public class PetSimulator {
         }
     }
 
+    // MODIFIES: pet, player
     // EFFECTS: displays and handles user inputs for a specific pet
     private void handleSpecificPetMenu(Pet pet) {
         System.out.println("Please select an option:\n");
@@ -276,15 +278,16 @@ public class PetSimulator {
         }
     }
 
+    // MODIFIES: droppedAccessory
     // EFFECTS: when the player interacts with the pet, there is a chance for a random accessory
-    //          to be dropped
+    //          to be dropped (by creating a new accessory object)
     private Accessory dropAccessory() {
         Accessory droppedAccessory = new Accessory();
         return droppedAccessory;
     }
 
     // REQUIRES: selected accessories are within player.getObtainedAccessories();
-    // MODIFIES: Player, Pet
+    // MODIFIES: player, pet
     // EFFECTS: adds the selected accessories to the pets' equippedAccessories and removes the selected accessories
     //          from players' obtainedAccessories
     private void equipAccessories(Pet pet) {
@@ -312,7 +315,7 @@ public class PetSimulator {
     }
 
     // REQUIRES: selected accessories are within pet.getEquippedAccessories();
-    // MODIFIES: Player, Pet
+    // MODIFIES: player, pet
     // EFFECTS: removes the selected accessories to the pets' equippedAccessories and adds the selected accessories
     //          from players' obtainedAccessories
     private void unequipAccessories(Pet pet) {
