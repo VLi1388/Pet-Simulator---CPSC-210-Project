@@ -20,6 +20,8 @@ public class PetSimulator {
     private Scanner scanner;
     private boolean isSimulatorRunning;
 
+    private boolean inPetsMenu;
+
     // EFFECTS: creates an instance of the PetSimulator console ui application
     public PetSimulator() throws IOException, InterruptedException {
         this.scanner = new Scanner(System.in);
@@ -97,12 +99,15 @@ public class PetSimulator {
 
         printOwnedPets();
 
-        System.out.println("Would you like to do anything with your pets? (y/n)");
-        String input = this.scanner.nextLine();
+        handlePet();
 
-        if (input.equals("y")) {
-            handlePetsMenu();
-        }
+        // if (input.equals("y")) {
+        //     inPetsMenu = true;
+
+	    //     while (inPetsMenu) {
+        //     	handlePetsMenu();
+	    //     }
+        // }
     }
 
     // EFFECTS: prints out the players' currently obtained accessories
@@ -133,6 +138,31 @@ public class PetSimulator {
         }
 
         System.out.println();
+    }
+
+    // EFFECTS: asks whether the player wants to do anything with their pets
+    private void handlePet() {
+
+        boolean inLoop = true;
+
+        while (inLoop) {
+            System.out.println("Would you like to do anything with your pets? (y/n)");
+            String input = this.scanner.nextLine();
+            switch (input) {
+                case "y":
+                        inPetsMenu = true;
+	                while (inPetsMenu) {
+            	        handlePetsMenu();
+	                }
+                    inLoop = false;
+                    break;
+                case "n":
+                    inLoop = false;
+                    break;
+                default:
+                    System.out.println("Invalid option inputted. Please try again.");
+            }
+        }
     }
 
     // EFFECTS: displays and handles user inputs for the main menu
@@ -195,7 +225,7 @@ public class PetSimulator {
 
     // EFFECTS: displays and handles user inputs for the pet menu
     private void handlePetsMenu() {
-        System.out.println("Please select a pet: (1/2/3)");
+        System.out.println("Please select a pet: (1/2/3), or \"q\" to return to the main menu");
         String select = this.scanner.nextLine();
 
         switch (select) {
@@ -219,6 +249,9 @@ public class PetSimulator {
                 } else {
                     System.out.println("Sorry you don't own a third pet");
                 }
+                break;
+            case "q":
+                inPetsMenu = false;
                 break;
             default:
                 System.out.println("Invalid option inputted. Please try again.");
