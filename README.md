@@ -19,3 +19,5 @@ This game is intended to be used as a relaxation for anyone who needs a break fr
 - As a user, I want to be able to equip my pet with accessories and add the accessories to my pets profile
 - As a user, I want to be able to view the accessories my pet has equipped  
 - As a user, I want to be able to feed or interact with my pet, and see the changes be reflected in my pets status
+- As a user, when I quit the simulator, I want to be reminded to save my player profile to file and have the option to do so or not
+- As a user, when I start the simulator, I want to be given the option to load my player profile from file.

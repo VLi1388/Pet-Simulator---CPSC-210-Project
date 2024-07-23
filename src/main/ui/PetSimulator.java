@@ -330,7 +330,7 @@ public class PetSimulator {
     private void processSpecificPetCommand(String input, Pet pet) {
         decreasePetStatus();
         // stub implementation: pet status will decrease everytime the user inputs a command
-        
+
         switch (input) {
             case "f":
                 pet.applyHunger(30);
@@ -346,8 +346,7 @@ public class PetSimulator {
                 pet.applyMood(30);
                 System.out.println(pet.getName() + "'s mood increased by 30!");
                 // TODO: implement so that we use an Interaction object to call on applyMood
-                // for now, just assume that interacting with the pet adds on to its mood
-
+                // for now, just assume that interacting with the pet adds on to its moodC
                 dropAccessory(pet);
                 break;
             case "e":
