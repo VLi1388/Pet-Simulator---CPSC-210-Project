@@ -12,8 +12,8 @@ public class Pet {
     private ArrayList<Accessory> equippedAccessories; // list of equipped accessories of the pet
 
     // pet location in the room
-    private int xCoord;
-    private int yCoord;
+    private int theXPos;
+    private int theYPos;
 
     private ArrayList<Food> preferredFood = new ArrayList<>(); // list of preferred food
     private ArrayList<Drink> preferredDrinks = new ArrayList<>(); // list of preferred drinks
@@ -46,8 +46,8 @@ public class Pet {
 
         // for now, default position at (0,0)
         // TODO: for future implementations, give pet a random location at the start
-        this.xCoord = 0;
-        this.yCoord = 0;
+        this.theXPos = 0;
+        this.theYPos = 0;
 
         generatePreferences();
     }
@@ -94,7 +94,7 @@ public class Pet {
     }
 
     public int getXCoord() {
-        return this.xCoord;
+        return this.theXPos;
     }
 
     // public void setXCoord(int xCoord) {
@@ -102,7 +102,7 @@ public class Pet {
     // }
 
     public int getYCoord() {
-        return this.yCoord;
+        return this.theYPos;
     }
 
     // public void setYCoord(int yCoord) {
