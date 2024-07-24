@@ -2,8 +2,13 @@ package model;
 
 import java.util.*;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import persistence.Writable;
+
 // Represents a player having a name, list of owned pets, and list of accessories obtained
-public class Player {
+public class Player implements Writable {
     private String name; // player name
     private ArrayList<Pet> ownedPets; // list of owned pets
     private ArrayList<Accessory> obtainedAccessories; // list of accessories obtained
@@ -19,6 +24,18 @@ public class Player {
         this.name = name;
         ownedPets = new ArrayList<>();
         ownedPets.add(initialPet);
+        obtainedAccessories = new ArrayList<>();
+    }
+
+    /*
+     * REQUIRES: name has a length > 0;
+     * EFFECTS: creates a player profile with a name set to the given name;
+     *          initializes a list of empty owned pets;
+     *          initialzes an empty list of obtained accessories
+     */
+    public Player(String name) {
+        this.name = name;
+        ownedPets = new ArrayList<>();
         obtainedAccessories = new ArrayList<>();
     }
 
@@ -93,5 +110,49 @@ public class Player {
      */
     public void removeAccesory(Accessory newAccesory) {
         obtainedAccessories.remove(newAccesory);
+    }
+
+    // REQUIRES: spot is either 1,2,3
+    // EFFECTS: check if the player actually owns a pet at the given spot
+    public boolean isOwning(int spot) {
+        if (spot <= this.ownedPets.size()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("obtained accessories", accessoriesToJson());
+        json.put("owned pets", ownedPetsToJson());
+        return json;
+    }
+
+    // EFFECTS: returns obtained accessories of this player as a JSON array
+    private JSONArray accessoriesToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Accessory a : obtainedAccessories) {
+            jsonArray.put(a.toJson());
+        }
+
+        return jsonArray;
+    }
+
+    // EFFECTS: returns owned pets of this player as a JSON array
+    private JSONArray ownedPetsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Pet p : ownedPets) {
+            jsonArray.put(p.toJson());
+        }
+
+        return jsonArray;
     }
 }

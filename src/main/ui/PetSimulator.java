@@ -1,6 +1,7 @@
 package ui;
 
 import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -8,12 +9,18 @@ import java.util.Scanner;
 
 import model.Pet;
 import model.Player;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 import model.Accessory;
 
 // a pet simulator that allows the player to adopt pets and interact with their pets
 // many methods in this class are referenced off lab 3 and lab 4
 public class PetSimulator {
     // private final int TICKS_PER_SECOND = 1;
+    private static final String JSON_STORE = "./data/workroom.json";
+
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     private Player player;
 
@@ -23,8 +30,11 @@ public class PetSimulator {
     private boolean inPetsMenu;
 
     // EFFECTS: creates an instance of the PetSimulator console ui application
-    public PetSimulator() throws IOException, InterruptedException {
+    public PetSimulator() throws IOException, InterruptedException, FileNotFoundException {
         this.scanner = new Scanner(System.in);
+
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
 
         // run the simulator
         this.isSimulatorRunning = true;
@@ -146,6 +156,10 @@ public class PetSimulator {
 
             System.out.println("Would you like to do anything with your pets? (y/n)");
             String input = this.scanner.nextLine();
+
+            decreasePetStatus();
+            // stub implementation: pet status will decrease everytime the user inputs a command
+
             switch (input) {
                 case "y":
                     inPetsMenu = true;
@@ -167,6 +181,10 @@ public class PetSimulator {
     private void handleMenu() {
         displayMenu();
         String input = this.scanner.nextLine();
+
+        decreasePetStatus();
+        // stub implementation: pet status will decrease everytime the user inputs a command
+
         processMenuCommands(input);
     }
 
@@ -177,21 +195,26 @@ public class PetSimulator {
 
         System.out.println("Please select an option:\n");
         System.out.println("p: View my profile");
-        System.out.println("a: Adopt a new pet");
+        System.out.println("a: Adopt a new pet (All current pets must have all stats >= 90");
+        System.out.println("s: Save player profile to file");
+        System.out.println("l: Load player profile from file");
         System.out.println("q: Quit game");
     }
 
     // EFFECTS: processes the user's input in the main menu
     private void processMenuCommands(String input) {
-        decreasePetStatus();
-        // stub implementation: pet status will decrease everytime the user inputs a command
-
         switch (input) {
             case "p":
                 displayPlayerProfile();
                 break;
             case "a":
                 adoptPet();
+                break;
+            case "s":
+                savePlayerProfile();
+                break;
+            case "l":
+                loadPlayerProfile();
                 break;
             case "q":
                 quitGame();
@@ -222,6 +245,29 @@ public class PetSimulator {
         }
     }
 
+    // EFFECTS: saves the player profile to file
+    private void savePlayerProfile() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(player);
+            jsonWriter.close();
+            System.out.println("Saved " + player.getName() + "'s profile to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads player profile from file
+    private void loadPlayerProfile() {
+        try {
+            player = jsonReader.read();
+            System.out.println("Loaded " + player.getName() + "'s profile from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
+    }
+
     // MODIFIES: this
     // EFFECTS: quits the game
     public void quitGame() {
@@ -239,14 +285,14 @@ public class PetSimulator {
         System.out.println("Please select a pet: (1/2/3), or \"q\" to return to the main menu");
         String select = this.scanner.nextLine();
 
+        decreasePetStatus();
+        // stub implementation: pet status will decrease everytime the user inputs a command
+
         processPetsMenuCommand(select);
     }
 
     // EFFECTS: proccesses input commands for the pets menu
     private void processPetsMenuCommand(String select) {
-        decreasePetStatus();
-        // stub implementation: pet status will decrease everytime the user inputs a command
-
         int petIndex = 0;
         try {
             petIndex = Integer.valueOf(select);
@@ -258,50 +304,10 @@ public class PetSimulator {
             inPetsMenu = false;
         } else if (petIndex < 1 || petIndex > 3) {
             System.out.println("Invalid option inputted. Please try again.");
-        } else if (isOwning(petIndex) == true) {
+        } else if (this.player.isOwning(petIndex) == true) {
             handleSpecificPetMenu(player.getOwnedPets().get(petIndex - 1));
         } else {
             System.out.println("Sorry you don't own that pet");
-        }
-
-        // switch (select) {
-        // case "1":
-        // if (isOwning(1) == true) {
-        // handleSpecificPetMenu(player.getOwnedPets().get(0));
-        // } else {
-        // System.out.println("Sorry you don't own any pets yet");
-        // }
-        // break;
-        // case "2":
-        // if (isOwning(2) == true) {
-        // handleSpecificPetMenu(player.getOwnedPets().get(1));
-        // } else {
-        // System.out.println("Sorry you don't own a second pet");
-        // }
-        // break;
-        // case "3":
-        // if (isOwning(3) == true) {
-        // handleSpecificPetMenu(player.getOwnedPets().get(2));
-        // } else {
-        // System.out.println("Sorry you don't own a third pet");
-        // }
-        // break;
-        // case "q":
-        // inPetsMenu = false;
-        // break;
-        // default:
-        // System.out.println("Invalid option inputted. Please try again.");
-        // }
-    }
-
-    // EFFECTS: check if the player actually a pet at the given spot
-    private boolean isOwning(int spot) {
-        List<Pet> ownedPets = player.getOwnedPets();
-
-        if (spot <= ownedPets.size()) {
-            return true;
-        } else {
-            return false;
         }
     }
 
@@ -310,6 +316,10 @@ public class PetSimulator {
     private void handleSpecificPetMenu(Pet pet) {
         displaySpecificPetMenu();
         String input = this.scanner.nextLine();
+
+        decreasePetStatus();
+        // stub implementation: pet status will decrease everytime the user inputs a command
+
         processSpecificPetCommand(input, pet);
     }
 
@@ -328,9 +338,6 @@ public class PetSimulator {
     // MODIFIES: pet
     // EFFECTS: processes the commands for a specific pet
     private void processSpecificPetCommand(String input, Pet pet) {
-        decreasePetStatus();
-        // stub implementation: pet status will decrease everytime the user inputs a command
-
         switch (input) {
             case "f":
                 pet.applyHunger(30);
@@ -390,6 +397,9 @@ public class PetSimulator {
         System.out.println("Please input based on accessory order position, separated by \",\"");
         String input = this.scanner.nextLine();
 
+        decreasePetStatus();
+        // stub implementation: pet status will decrease everytime the user inputs a command
+
         List<String> inputs = new ArrayList<String>(Arrays.asList(input.split(",")));
 
         List<Integer> indices = new ArrayList<>();
@@ -425,6 +435,9 @@ public class PetSimulator {
 
         System.out.println("Please input based on accessory order position, separated by \",\"");
         String input = this.scanner.nextLine();
+
+        decreasePetStatus();
+        // stub implementation: pet status will decrease everytime the user inputs a command
 
         List<String> inputs = new ArrayList<String>(Arrays.asList(input.split(",")));
 

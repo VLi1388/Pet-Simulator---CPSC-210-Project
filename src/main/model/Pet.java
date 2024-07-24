@@ -2,8 +2,13 @@ package model;
 
 import java.util.*;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import persistence.Writable;
+
 // Represents a pet with a name, species, mood, hunger, thirst, equipped accessories, and preferences
-public class Pet {
+public class Pet implements Writable {
     private String species; // pet species
     private String name; // pet name
     private int mood; // pet's mood, out of 100
@@ -251,5 +256,28 @@ public class Pet {
         for (Accessory a : accessories) {
             equippedAccessories.remove(a);
         }
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("species", species);
+        json.put("mood", mood);
+        json.put("hunger", hunger);
+        json.put("thirst", thirst);
+        json.put("equipped accessories", accessoriesToJson());
+        return json;
+    }
+
+    // EFFECTS: returns equipped accessories of this pet as a JSON array
+    private JSONArray accessoriesToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Accessory a : equippedAccessories) {
+            jsonArray.put(a.toJson());
+        }
+
+        return jsonArray;
     }
 }

@@ -10,16 +10,18 @@ import java.util.*;
 
 public class PlayerTest {
     private Player jane;
+    private Player joe;
 
     private Pet bill = new Pet("Horse", "Bill");
 
     @BeforeEach
     void runBefore() {
         jane = new Player("Jane", bill);
+        joe = new Player("Joe");
     }
 
     @Test
-    void testConstructor() {
+    void testConstructor1() {
         assertEquals("Jane", jane.getName());
 
         List<Pet> ownedPets = jane.getOwnedPets();
@@ -27,6 +29,17 @@ public class PlayerTest {
         assertEquals(bill, ownedPets.get(0));
 
         List<Accessory> obtainedAccess = jane.getObtainedAccessories();
+        assertEquals(0, obtainedAccess.size());
+    }
+
+    @Test
+    void testConstructor2() {
+        assertEquals("Joe", joe.getName());
+
+        List<Pet> ownedPets = joe.getOwnedPets();
+        assertEquals(0, ownedPets.size());
+
+        List<Accessory> obtainedAccess = joe.getObtainedAccessories();
         assertEquals(0, obtainedAccess.size());
     }
 
@@ -357,5 +370,51 @@ public class PlayerTest {
         List<Accessory> obtainedAccess = jane.getObtainedAccessories();
         assertEquals(1, obtainedAccess.size());
         assertEquals(access2, obtainedAccess.get(0));
+    }
+
+    @Test
+    void testIsOwningOnePet() {
+        // remember that by default there is already one pet
+
+        assertTrue(jane.isOwning(1));
+        assertFalse(jane.isOwning(2));
+        assertFalse(jane.isOwning(3));
+    }
+    
+
+
+    @Test
+    void testIsOwningTwoPet() {
+        bill.applyHunger(10);
+        bill.applyMood(10);
+        bill.applyThirst(10);
+
+        Pet bow = new Pet("Dragon", "Bow");
+        jane.adoptPet(bow); // successful adoption
+
+        assertTrue(jane.isOwning(1));
+        assertTrue(jane.isOwning(2));
+        assertFalse(jane.isOwning(3));
+    }
+
+    @Test
+    void testIsOwningThreePet() {
+        bill.applyHunger(10);
+        bill.applyMood(10);
+        bill.applyThirst(10);
+
+        Pet bow = new Pet("Dragon", "Bow");
+        jane.adoptPet(bow); // successful adoption
+
+        bow.applyHunger(10);
+        bow.applyMood(10);
+        bow.applyThirst(10);
+
+        Pet hyu = new Pet("Elephant", "Hyu");
+        jane.adoptPet(hyu); // successful adoption
+
+        assertTrue(jane.isOwning(1));
+        assertTrue(jane.isOwning(2));
+        assertTrue(jane.isOwning(3));
     }
 }

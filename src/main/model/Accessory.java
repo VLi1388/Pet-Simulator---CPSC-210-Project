@@ -2,9 +2,13 @@ package model;
 
 import java.util.*;
 
+import org.json.JSONObject;
+
+import persistence.Writable;
+
 // represents an accessory with a name and effect
 // player is allowed to have multiple of the same accessories
-public class Accessory {
+public class Accessory implements Writable {
     private String name;
 
     // TODO: give random effects to accessories
@@ -27,8 +31,20 @@ public class Accessory {
         this.name = namesPool.get(selectIndex);
     }
 
+    // EFFECTS: creates an accessory with the given name
+    public Accessory(String name) {
+        this.name = name;
+    }
+
     public String getName() {
         return this.name;
     }
 
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+
+        return json;
+    }
 }

@@ -15,15 +15,22 @@ public class AccessoryTest{
                                                                 "B&W Socks",
                                                                 "Cowboy Hat"});
                                                                 
-    private Accessory testAccess;
+    private Accessory testAccess1;
+    private Accessory testAccess2;
 
     @BeforeEach
     void runBefore() {
-        testAccess = new Accessory();
+        testAccess1 = new Accessory();
+        testAccess2 = new Accessory("Silver Pendant");
     }
 
     @Test
-    void testConstructor() {
-        assertTrue(namesPool.contains(testAccess.getName()));
+    void testConstructor1() {
+        assertTrue(namesPool.contains(testAccess1.getName()));
+    }
+
+    @Test
+    void testConstructor2() {
+        assertEquals("Silver Pendant", testAccess2.getName());
     }
 }
