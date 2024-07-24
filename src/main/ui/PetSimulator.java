@@ -26,6 +26,7 @@ public class PetSimulator {
 
     private Scanner scanner;
     private boolean isSimulatorRunning;
+    private boolean inWelcomeMenu;
 
     private boolean inPetsMenu;
 
@@ -39,7 +40,11 @@ public class PetSimulator {
         // run the simulator
         this.isSimulatorRunning = true;
 
-        handleWelcomeMenu();
+
+        this.inWelcomeMenu = true;
+        while (inWelcomeMenu) {
+            handleWelcomeMenu();
+        }
 
         // TODO: implement a tick method that will decrease pet status with time
         // beginTicks();
@@ -72,9 +77,11 @@ public class PetSimulator {
         switch (input) {
             case "n":
                 createPlayerProfile();
+                inWelcomeMenu = false;
                 break;
             case "l":
                 loadPlayerProfile();
+                inWelcomeMenu = false;
                 break;
             default:
                 System.out.println("Invalid option inputted. Please try again.");
