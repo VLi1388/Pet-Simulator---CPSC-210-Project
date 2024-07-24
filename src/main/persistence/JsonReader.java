@@ -44,15 +44,10 @@ public class JsonReader {
     // EFFECTS: parses player from JSON object and returns it
     private Player parsePlayer(JSONObject jsonObject) {
         String name = jsonObject.getString("name");
-        // Pet initialPet = parsePet(jsonObject);
-        // since pet would've been written to the Json file in order, we can just read
-        // the first pet and that would be the initial pet
-
         Player player = new Player(name);
         addObtainedAccessories(player, jsonObject);
         addPets(player, jsonObject);
-        // add accessories
-        // add pets
+
         return player;
     }
 
@@ -93,7 +88,6 @@ public class JsonReader {
         int mood = jsonObject.getInt("mood");
         int hunger = jsonObject.getInt("hunger");
         int thirst = jsonObject.getInt("thirst");
-        //Category category = Category.valueOf(jsonObject.getString("category"));
         
         Pet pet = new Pet(species, name);
         pet.setMood(mood);
@@ -108,7 +102,7 @@ public class JsonReader {
     // MODIFIES: pet
     // EFFECTS: parses equipped accessories from JSON object and adds them to pet
     private void addEquippedAccessories(Pet pet, JSONObject jsonObject) {
-        JSONArray jsonArray = jsonObject.getJSONArray("obtained accessories");
+        JSONArray jsonArray = jsonObject.getJSONArray("equipped accessories");
         
         List<Accessory> equippedAccessories = new ArrayList<>();
 

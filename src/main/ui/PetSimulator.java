@@ -17,7 +17,7 @@ import model.Accessory;
 // many methods in this class are referenced off lab 3 and lab 4
 public class PetSimulator {
     // private final int TICKS_PER_SECOND = 1;
-    private static final String JSON_STORE = "./data/workroom.json";
+    private static final String JSON_STORE = "./data/player.json";
 
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
@@ -39,7 +39,7 @@ public class PetSimulator {
         // run the simulator
         this.isSimulatorRunning = true;
 
-        createPlayerProfile();
+        handleWelcomeMenu();
 
         // TODO: implement a tick method that will decrease pet status with time
         // beginTicks();
@@ -50,9 +50,41 @@ public class PetSimulator {
 
     }
 
+    // EFFECTS: handles the welcoming screen menu
+    private void handleWelcomeMenu() {
+        printSeparation();
+
+        System.out.println("Welcome to the pet simulator!");
+
+        printSeparation();
+
+        System.out.println("Please select an option:\n");
+        System.out.println("n: Create a new player profile");
+        System.out.println("l: Load player profile from file");
+
+        String input = this.scanner.nextLine();
+
+        processWelcomeMenuCommands(input);
+    }
+
+    private void processWelcomeMenuCommands(String input) {
+        switch (input) {
+            case "n":
+                createPlayerProfile();
+                break;
+            case "l":
+                loadPlayerProfile();
+                break;
+            default:
+                System.out.println("Invalid option inputted. Please try again.");
+        }
+    }
+
     // MODIFIES: player, initialPet
     // EFFECTS: initializes the simulator by setting up a player profile
     private void createPlayerProfile() {
+        printSeparation();
+
         System.out.println("What is your name?");
         String playerName = this.scanner.nextLine();
 
@@ -157,9 +189,6 @@ public class PetSimulator {
             System.out.println("Would you like to do anything with your pets? (y/n)");
             String input = this.scanner.nextLine();
 
-            decreasePetStatus();
-            // stub implementation: pet status will decrease everytime the user inputs a command
-
             switch (input) {
                 case "y":
                     inPetsMenu = true;
@@ -174,6 +203,9 @@ public class PetSimulator {
                 default:
                     System.out.println("Invalid option inputted. Please try again.");
             }
+
+            decreasePetStatus();
+            // stub implementation: pet status will decrease everytime the user inputs a command
         }
     }
 
@@ -182,10 +214,10 @@ public class PetSimulator {
         displayMenu();
         String input = this.scanner.nextLine();
 
+        processMenuCommands(input);
+
         decreasePetStatus();
         // stub implementation: pet status will decrease everytime the user inputs a command
-
-        processMenuCommands(input);
     }
 
     // EFFECTS: displays a list of commands the user can choose to input from the
@@ -195,7 +227,7 @@ public class PetSimulator {
 
         System.out.println("Please select an option:\n");
         System.out.println("p: View my profile");
-        System.out.println("a: Adopt a new pet (All current pets must have all stats >= 90");
+        System.out.println("a: Adopt a new pet (All current pets must have all stats >= 90)");
         System.out.println("s: Save player profile to file");
         System.out.println("l: Load player profile from file");
         System.out.println("q: Quit game");
@@ -285,10 +317,10 @@ public class PetSimulator {
         System.out.println("Please select a pet: (1/2/3), or \"q\" to return to the main menu");
         String select = this.scanner.nextLine();
 
+        processPetsMenuCommand(select);
+
         decreasePetStatus();
         // stub implementation: pet status will decrease everytime the user inputs a command
-
-        processPetsMenuCommand(select);
     }
 
     // EFFECTS: proccesses input commands for the pets menu
@@ -317,10 +349,10 @@ public class PetSimulator {
         displaySpecificPetMenu();
         String input = this.scanner.nextLine();
 
+        processSpecificPetCommand(input, pet);
+
         decreasePetStatus();
         // stub implementation: pet status will decrease everytime the user inputs a command
-
-        processSpecificPetCommand(input, pet);
     }
 
     // EFFECTS: displays the menu for a specific pet
@@ -397,9 +429,6 @@ public class PetSimulator {
         System.out.println("Please input based on accessory order position, separated by \",\"");
         String input = this.scanner.nextLine();
 
-        decreasePetStatus();
-        // stub implementation: pet status will decrease everytime the user inputs a command
-
         List<String> inputs = new ArrayList<String>(Arrays.asList(input.split(",")));
 
         List<Integer> indices = new ArrayList<>();
@@ -418,6 +447,9 @@ public class PetSimulator {
         for (Accessory a : accessToBeEquipped) {
             player.removeAccesory(a);
         }
+
+        decreasePetStatus();
+        // stub implementation: pet status will decrease everytime the user inputs a command
     }
 
     // REQUIRES: selected accessories are within pet.getEquippedAccessories();
@@ -435,9 +467,6 @@ public class PetSimulator {
 
         System.out.println("Please input based on accessory order position, separated by \",\"");
         String input = this.scanner.nextLine();
-
-        decreasePetStatus();
-        // stub implementation: pet status will decrease everytime the user inputs a command
 
         List<String> inputs = new ArrayList<String>(Arrays.asList(input.split(",")));
 
@@ -457,6 +486,9 @@ public class PetSimulator {
         for (Accessory a : accessToBeUnequipped) {
             player.addAccesory(a);
         }
+
+        decreasePetStatus();
+        // stub implementation: pet status will decrease everytime the user inputs a command
     }
 
     // EFFECTS: prints a separation line

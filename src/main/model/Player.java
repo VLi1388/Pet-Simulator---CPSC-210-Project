@@ -71,6 +71,7 @@ public class Player implements Writable {
     public void giveAwayPet(Pet pet) {
         ownedPets.remove(pet);
     }
+    // TODO: add this option for the player in the ui menu
 
     /*
      * EFFECTS: returnes whether or not the player can adopt a new pet:

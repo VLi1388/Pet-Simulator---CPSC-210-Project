@@ -1,0 +1,22 @@
+{
+    "obtained accessories": [],
+    "owned pets": [
+        {
+            "thirst": 80,
+            "mood": 82,
+            "species": "Dog",
+            "name": "Bill",
+            "equipped accessories": [],
+            "hunger": 78
+        },
+        {
+            "thirst": 67,
+            "mood": 67,
+            "species": "Cat",
+            "name": "Milk",
+            "equipped accessories": [{"name": "Galaxy Hat"}],
+            "hunger": 67
+        }
+    ],
+    "name": "Bob"
+}
