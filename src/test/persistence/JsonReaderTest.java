@@ -30,6 +30,9 @@ class JsonReaderTest extends JsonTest {
             Player player = reader.read();
             assertEquals("Jane", player.getName());
 
+            List<Accessory> obtainedAccessories = player.getObtainedAccessories();
+            assertEquals(0, obtainedAccessories.size());
+
             List<Pet> ownedPets = player.getOwnedPets(); 
             assertEquals(1, ownedPets.size());
             
@@ -43,21 +46,6 @@ class JsonReaderTest extends JsonTest {
         }
     }
 
-    // @Test
-    // void testReaderGeneralWorkRoom() {
-    //     JsonReader reader = new JsonReader("./data/testReaderGeneralWorkRoom.json");
-    //     try {
-    //         WorkRoom wr = reader.read();
-    //         assertEquals("My work room", wr.getName());
-    //         List<Thingy> thingies = wr.getThingies();
-    //         assertEquals(2, thingies.size());
-    //         checkThingy("needle", Category.STITCHING, thingies.get(0));
-    //         checkThingy("saw", Category.WOODWORK, thingies.get(1));
-    //     } catch (IOException e) {
-    //         fail("Couldn't read from file");
-    //     }
-    // }
-
     @Test
     void testReaderOnePetPlayerProfile() {
         // player has no accessories, pet has no accessories, pet stats changed
@@ -65,6 +53,9 @@ class JsonReaderTest extends JsonTest {
         try {
             Player player = reader.read();
             assertEquals("Joe", player.getName());
+
+            List<Accessory> obtainedAccessories = player.getObtainedAccessories();
+            assertEquals(0, obtainedAccessories.size());
 
             List<Pet> ownedPets = player.getOwnedPets(); 
             assertEquals(1, ownedPets.size());
@@ -80,12 +71,15 @@ class JsonReaderTest extends JsonTest {
     }
 
     @Test
-    void testReaderTwoPetPlayerProfile() {
+    void testReaderTwoPetsPlayerProfile() {
         // player has no accesorries, one pet has accessories one doesn't
-        JsonReader reader = new JsonReader("./data/testReaderTwoPetPlayerProfile.json");
+        JsonReader reader = new JsonReader("./data/testReaderTwoPetsPlayerProfile.json");
         try {
             Player player = reader.read();
             assertEquals("Bob", player.getName());
+
+            List<Accessory> obtainedAccessories = player.getObtainedAccessories();
+            assertEquals(0, obtainedAccessories.size());
 
             List<Pet> ownedPets = player.getOwnedPets(); 
             assertEquals(2, ownedPets.size());
@@ -108,12 +102,17 @@ class JsonReaderTest extends JsonTest {
     }
 
     @Test
-    void testReaderThreePetPlayerProfile() {
+    void testReaderThreePetsPlayerProfile() {
         // player has accessories, two pets have accessories one doesn't
-        JsonReader reader = new JsonReader("./data/testReaderThreePetPlayerProfile.json");
+        JsonReader reader = new JsonReader("./data/testReaderThreePetsPlayerProfile.json");
         try {
             Player player = reader.read();
             assertEquals("Anny", player.getName());
+
+            List<Accessory> obtainedAccessories = player.getObtainedAccessories();
+            assertEquals(2, obtainedAccessories.size());
+            assertEquals("Galaxy Hat", obtainedAccessories.get(0).getName());
+            assertEquals("B&W Socks", obtainedAccessories.get(1).getName());
 
             List<Pet> ownedPets = player.getOwnedPets(); 
             assertEquals(3, ownedPets.size());
@@ -142,6 +141,5 @@ class JsonReaderTest extends JsonTest {
         } catch (IOException e) {
             fail("Couldn't read from file");
         }
-        
     }
 }

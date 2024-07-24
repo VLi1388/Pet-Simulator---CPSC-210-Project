@@ -258,6 +258,7 @@ public class Pet implements Writable {
         }
     }
 
+    // EFFECTS: saves this pet to a json file
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

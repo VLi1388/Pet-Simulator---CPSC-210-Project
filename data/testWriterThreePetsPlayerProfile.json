@@ -1,0 +1,36 @@
+{
+    "obtained accessories": [
+        {"name": "Silver Pendant"},
+        {"name": "Galaxy Hat"}
+    ],
+    "owned pets": [
+        {
+            "thirst": 80,
+            "mood": 80,
+            "species": "Dog",
+            "name": "Bill",
+            "equipped accessories": [{"name": "Red Bow Tie"}],
+            "hunger": 80
+        },
+        {
+            "thirst": 80,
+            "mood": 70,
+            "species": "Cat",
+            "name": "Mill",
+            "equipped accessories": [
+                {"name": "Red Bow Tie"},
+                {"name": "B&W Socks"}
+            ],
+            "hunger": 80
+        },
+        {
+            "thirst": 80,
+            "mood": 80,
+            "species": "Bird",
+            "name": "Chippy",
+            "equipped accessories": [],
+            "hunger": 80
+        }
+    ],
+    "name": "Jane"
+}

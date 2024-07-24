@@ -40,6 +40,7 @@ public class Accessory implements Writable {
         return this.name;
     }
 
+    // EFFECTS: saves this accessory to a json file
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

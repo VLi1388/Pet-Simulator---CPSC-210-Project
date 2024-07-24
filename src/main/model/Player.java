@@ -123,9 +123,7 @@ public class Player implements Writable {
         }
     }
 
-
-
-
+    // EFFECTS: saves this player to a json file
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

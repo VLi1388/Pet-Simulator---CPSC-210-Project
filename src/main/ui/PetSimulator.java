@@ -67,6 +67,7 @@ public class PetSimulator {
         processWelcomeMenuCommands(input);
     }
 
+    // EFFECTS: processes the user command for the welcome menu
     private void processWelcomeMenuCommands(String input) {
         switch (input) {
             case "n":
@@ -171,7 +172,7 @@ public class PetSimulator {
         }
     }
 
-    // Effects: lists out the accessories currently equipped by the given pet
+    // EFFECTS: lists out the accessories currently equipped by the given pet
     private void printPetEquippedAccessories(Pet pet) {
         System.out.println("Equipped accessories:");
         for (Accessory a : pet.getEquippedAccessories()) {

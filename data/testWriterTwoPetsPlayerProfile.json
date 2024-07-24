@@ -1,0 +1,22 @@
+{
+    "obtained accessories": [],
+    "owned pets": [
+        {
+            "thirst": 80,
+            "mood": 80,
+            "species": "Dog",
+            "name": "Bill",
+            "equipped accessories": [{"name": "Red Bow Tie"}],
+            "hunger": 80
+        },
+        {
+            "thirst": 80,
+            "mood": 70,
+            "species": "Cat",
+            "name": "Mill",
+            "equipped accessories": [],
+            "hunger": 80
+        }
+    ],
+    "name": "Jane"
+}

@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Test;
 import java.util.*;
 
 public class PetTest {
-    public Pet cat;
-    public Pet dog;
+    private Pet cat;
+    private Pet dog;
 
     @BeforeEach
     void runBefore() {
@@ -32,7 +32,6 @@ public class PetTest {
 
         List<Accessory> equippedAcces = cat.getEquippedAccessories();
         assertEquals(0, equippedAcces.size());
-
 
         List<Food> prefFood = cat.getPreferredFood();
         assertEquals(3, prefFood.size());
@@ -59,7 +58,6 @@ public class PetTest {
         List<Accessory> equippedAcces = dog.getEquippedAccessories();
         assertEquals(0, equippedAcces.size());
 
-
         List<Food> prefFood = dog.getPreferredFood();
         assertEquals(3, prefFood.size());
 
@@ -69,8 +67,6 @@ public class PetTest {
         List<Interaction> prefInterac = dog.getPreferredInteractions();
         assertEquals(3, prefInterac.size());
     }
-
-
 
     @Test
     void testApplyHungerDogByOne() {
@@ -101,14 +97,14 @@ public class PetTest {
         assertEquals(100, dog.getHunger());
         assertEquals(90, dog.getMood());
     }
-    
+
     @Test
     void testApplyHungerDogToOver100() {
         dog.applyHunger(50);
         assertEquals(100, dog.getHunger());
         assertEquals(90, dog.getMood());
     }
-    
+
     @Test
     void testApplyHungerDogTwice() {
         dog.applyHunger(5);
@@ -119,8 +115,6 @@ public class PetTest {
         assertEquals(95, dog.getHunger());
         assertEquals(87, dog.getMood());
     }
-
-
 
     @Test
     void testApplyThisrtCatByOne() {
@@ -151,14 +145,14 @@ public class PetTest {
         assertEquals(100, cat.getThirst());
         assertEquals(90, cat.getMood());
     }
-    
+
     @Test
     void testApplyThisrtCatToOver100() {
         cat.applyThirst(50);
         assertEquals(100, cat.getThirst());
         assertEquals(90, cat.getMood());
     }
-    
+
     @Test
     void testApplyThisrtCatTwice() {
         cat.applyThirst(5);
@@ -169,8 +163,6 @@ public class PetTest {
         assertEquals(95, cat.getThirst());
         assertEquals(87, cat.getMood());
     }
-
-    
 
     @Test
     void testUpdateMoodCatWholeNum() {
@@ -236,8 +228,6 @@ public class PetTest {
         assertEquals(80, cat.getMood());
     }
 
-
-
     @Test
     void testApplyMoodDogByOne() {
         // remember default stat is 80
@@ -263,13 +253,13 @@ public class PetTest {
         dog.applyMood(20);
         assertEquals(100, dog.getMood());
     }
-    
+
     @Test
     void testApplyMoodDogToOver100() {
         dog.applyMood(50);
         assertEquals(100, dog.getMood());
     }
-    
+
     @Test
     void testApplyMoodDogTwice() {
         dog.applyMood(5);
@@ -278,8 +268,6 @@ public class PetTest {
         dog.applyMood(10);
         assertEquals(95, dog.getMood());
     }
-
-
 
     @Test
     void testDecreaseMoodOnce() {
@@ -326,24 +314,19 @@ public class PetTest {
         assertEquals(78, cat.getThirst());
     }
 
-
-
-
     // @Test
     // void testGeneratePreferencesCat() {
 
-    //     List<Food> prefFood = cat.getPreferredFood();
-    //     assertEquals(3, prefFood.size());
+    // List<Food> prefFood = cat.getPreferredFood();
+    // assertEquals(3, prefFood.size());
 
-    //     List<Drink> prefDrinks = cat.getPreferredDrinks();
-    //     assertEquals(3, prefDrinks.size());
+    // List<Drink> prefDrinks = cat.getPreferredDrinks();
+    // assertEquals(3, prefDrinks.size());
 
-    //     List<Interaction> prefInterac = cat.getPreferredInteractions();
-    //     assertEquals(3, prefInterac.size());
+    // List<Interaction> prefInterac = cat.getPreferredInteractions();
+    // assertEquals(3, prefInterac.size());
     // }
     // covered in the constructor test
-
-
 
     @Test
     void testEquipAccessoriesDogOneItem() {
@@ -407,8 +390,6 @@ public class PetTest {
         assertEquals(access3, equippedAccess2.get(2));
     }
 
-
-
     @Test
     void testUnequipAccessoriesDogOneItemFromOne() {
         Accessory access1 = new Accessory();
@@ -419,7 +400,7 @@ public class PetTest {
         dog.equipAccessories(accessories);
 
         dog.unequipAccessories(accessories);
-        
+
         List<Accessory> equippedAccess = dog.getEquippedAccessories();
         assertEquals(0, equippedAccess.size());
     }
