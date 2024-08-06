@@ -1,6 +1,5 @@
 package ui;
 
-import java.awt.desktop.QuitResponse;
 import java.io.FileNotFoundException;
 
 import javax.swing.JFrame;
@@ -8,13 +7,14 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.WindowConstants;
 
-import model.Player;
 import ui.tabs.AdoptNewPetTab;
 import ui.tabs.HomeTab;
 import ui.tabs.LoadTab;
 import ui.tabs.PlayerProfileTab;
 import ui.tabs.SaveTab;
 
+// a pet simulator GUI that allows the player to interact graphically with the game
+// this class was referenced off the SmartHome Project
 public class PetSimulatorGUI extends JFrame {
     public static final int HOME_TAB_INDEX = 0;
     public static final int PLAYER_PROFILE_TAB_INDEX = 1;
@@ -28,12 +28,7 @@ public class PetSimulatorGUI extends JFrame {
     
     private PetSimulator petSimulator;
 
-    // public static void main(String[] args) {
-    //     new PetSimulatorGUI();
-    // }
-
-    //MODIFIES: this
-    //EFFECTS: creates SmartHomeUI, loads SmartHome appliances, displays sidebar and tabs
+    //EFFECTS: creates PetSimulatorGUI, creates PetSimulator, displays sidebar and tabs
     public PetSimulatorGUI() {
         super("Pet Simulator Console");
         setSize(WIDTH, HEIGHT);
@@ -45,10 +40,6 @@ public class PetSimulatorGUI extends JFrame {
             System.out.println("Load file was not found. Unable to run simulator.");
         }
 
-        //player = new Player(); // constructor needs name and initial pet
-
-        // loadAppliances();
-
         sidebar = new JTabbedPane();
         sidebar.setTabPlacement(JTabbedPane.LEFT);
 
@@ -58,32 +49,8 @@ public class PetSimulatorGUI extends JFrame {
         setVisible(true);
     }
 
-    // //EFFECTS: returns SmartHome object controlled by this UI
-    // public PetSimulator getPetSimulator() {
-    //     return petSimulator;
-    // }
-
-    // //MODIFIES: this
-    // //EFFECTS: installs several appliances and sets no one home
-    // private void loadAppliances() {
-    //     Appliance fridge = new Refrigerator(5);
-    //     Appliance oven = new Oven(0);
-    //     Appliance ac = new HeatingAC(18);
-    //     Appliance fireplace = new Fireplace(0);
-
-    //     smartHome.install(fridge);
-    //     smartHome.install(oven);
-    //     smartHome.install(ac);
-    //     smartHome.install(fireplace);
-
-    //     ac.setRunsWhileAway(true);
-    //     fridge.setRunsWhileAway(true);
-
-    //     smartHome.leaveHome();
-    // }
-
     //MODIFIES: this
-    //EFFECTS: adds home tab, settings tab and report tab to this UI
+    //EFFECTS: adds neccessary tabs to this GUI
     private void loadTabs() {
         JPanel homeTab = new HomeTab(this);
         JPanel playerProfileTab = new PlayerProfileTab(this);
@@ -102,13 +69,8 @@ public class PetSimulatorGUI extends JFrame {
         sidebar.add(loadTab, LOAD_TAB_INDEX);
         sidebar.setTitleAt(LOAD_TAB_INDEX, "Load");
     }
-
-    //EFFECTS: returns sidebar of this UI
-    public JTabbedPane getTabbedPane() {
-        return sidebar;
-    }
-
-    //EFFECTS: returns petSimulator object controlled by this UI
+    
+    //EFFECTS: returns petSimulator object controlled by this GUI
     public PetSimulator getPetSimulator() {
         return petSimulator;
     }

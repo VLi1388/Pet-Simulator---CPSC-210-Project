@@ -1,6 +1,7 @@
 package ui;
 
-// this class was referenced off the smart home project
+// enum class that holds the button labels
+// this class was referenced off the SmartHome Project
 public enum ButtonNames {
     SAVE("Save"),
     LOAD("Load"),

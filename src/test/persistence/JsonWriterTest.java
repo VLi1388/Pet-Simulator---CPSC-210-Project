@@ -58,6 +58,7 @@ class JsonWriterTest extends JsonTest {
         }
     }
 
+    @SuppressWarnings("methodlength")
     @Test
     void testWriterTwoPetsPlayerProfile() {
         // player has no accesorries, one pet has accessories one doesn't
@@ -106,6 +107,7 @@ class JsonWriterTest extends JsonTest {
         }
     }
 
+    @SuppressWarnings("methodlength")
     @Test
     void testWriterThreePetsPlayerProfile() {
         // player has accessories, two pets have accessories one doesn't

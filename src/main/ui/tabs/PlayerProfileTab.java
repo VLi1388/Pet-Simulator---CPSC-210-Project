@@ -8,18 +8,19 @@ import model.Player;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.*;
-import java.util.List;
 
 import ui.ButtonNames;
 import ui.PetSimulatorGUI;
 
+// class that represents the functionalities of the player profile tab
+// this class was referenced off the SmartHome Project
 public class PlayerProfileTab extends Tab {
 
     private JScrollPane playerAccessPane;
     private JTextArea playerAccessText;
     private JLabel errorMessage;
 
+    // EFFECTS: constructs a player profile tab for console with buttons and info
     public PlayerProfileTab(PetSimulatorGUI controller) {
         super(controller);
 
@@ -33,6 +34,7 @@ public class PlayerProfileTab extends Tab {
         placeViewPetsButton();
     }
 
+    // EFFECTS: create text box and button to view player inventory
     private void displayObtainedAccessories() {
 
         placeCheckInventoryButton();
@@ -49,6 +51,7 @@ public class PlayerProfileTab extends Tab {
         add(reportBlock);
     }
 
+    // EFFECTS: create button to check inventory
     private void placeCheckInventoryButton() {
         JButton checkInventory = new JButton(ButtonNames.CHECK_INVENTORY.getValue());
         JPanel buttonRow = formatButtonRow(checkInventory);
@@ -60,12 +63,16 @@ public class PlayerProfileTab extends Tab {
                 playerAccessText.setText(
                         "Obtained Accessories: " + getController().getPetSimulator().displayObtainedAccrssories());
                 playerAccessPane.setViewportView(playerAccessText);
+
+                getController().getPetSimulator().decreasePetStatus();
+                // stub implementation: pet status will decrease everytime the user takes action
             }
         });
 
         this.add(buttonRow);
     }
 
+    // EFFECTS: creates buttons to view pets
     private void placeViewPetsButton() {
         JButton viewPet1 = new JButton(ButtonNames.VIEW_PET_1.getValue());
         JButton viewPet2 = new JButton(ButtonNames.VIEW_PET_2.getValue());
@@ -83,6 +90,7 @@ public class PlayerProfileTab extends Tab {
         this.add(buttonRow);
     }
 
+    // EFFECTS: handels what happens when the view pet button is pressed
     private void handleViewPetButton(JButton button, int spot, int index) {
         button.addActionListener(new ActionListener() {
             @Override
@@ -95,10 +103,14 @@ public class PlayerProfileTab extends Tab {
                 } else {
                     errorMessage.setText("You don't own that pet yet");
                 }
+
+                getController().getPetSimulator().decreasePetStatus();
+                // stub implementation: pet status will decrease everytime the user takes action
             }
         });
     }
 
+    // EFFECTS: creates a pop up window with the pet profile
     private void popUpPet(Player player, int index) {
         JFrame frame = new JFrame();
         frame.setSize(800, 500);
@@ -112,6 +124,7 @@ public class PlayerProfileTab extends Tab {
         frame.setVisible(true);
     }
 
+    // EFFECTS: sets up the pop up window with the pet profile
     private void setUpPetsPanel(JPanel panel, Player player, int index) {
         Pet thisPet = player.getOwnedPets().get(index);
 
@@ -125,17 +138,17 @@ public class PlayerProfileTab extends Tab {
         speciesLabel.setBounds(10, 50, 120, 25);
         panel.add(speciesLabel);
 
+        JLabel hungerLabel = new JLabel("Hunger: " + thisPet.getHunger());
+        hungerLabel.setBounds(10, 110, 120, 25);
+        panel.add(hungerLabel);
+
+        JLabel thirstLabel = new JLabel("Thirst: " + thisPet.getThirst());
+        thirstLabel.setBounds(10, 140, 120, 25);
+        panel.add(thirstLabel);
+
         JLabel moodLabel = new JLabel("Mood: " + thisPet.getMood());
         moodLabel.setBounds(10, 80, 120, 25);
         panel.add(moodLabel);
-
-        JLabel thirstLabel = new JLabel("Hunger: " + thisPet.getHunger());
-        thirstLabel.setBounds(10, 110, 120, 25);
-        panel.add(thirstLabel);
-
-        JLabel hungerLabel = new JLabel("Thirst: " + thisPet.getThirst());
-        hungerLabel.setBounds(10, 140, 120, 25);
-        panel.add(hungerLabel);
 
         JLabel equippedAccessLabel = new JLabel(
                 "Equipped Accessories: " + getController().getPetSimulator().displayEquippedAccess(index));
@@ -145,6 +158,7 @@ public class PlayerProfileTab extends Tab {
         placeActionButtons(panel, thisPet, hungerLabel, thirstLabel, moodLabel, player, equippedAccessLabel, index);
     }
 
+    // EFFECTS: creates action buttons for the pet
     private void placeActionButtons(JPanel panel, Pet pet, JLabel hungerLabel, JLabel thirstLabel, JLabel moodLabel,
             Player player, JLabel equippedAccessLabel, int index) {
         JButton feed = new JButton(ButtonNames.FEED.getValue());
@@ -175,6 +189,7 @@ public class PlayerProfileTab extends Tab {
         handelUnequipAccessButton(unequipAccess, player, pet, equippedAccessLabel, index);
     }
 
+    // EFFECTS: increases the hunger field of the pet when the button is pressed
     private void handleFeedButton(JButton button, Pet pet, JLabel hungerLabel) {
 
         button.addActionListener(new ActionListener() {
@@ -187,6 +202,7 @@ public class PlayerProfileTab extends Tab {
         });
     }
 
+    // EFFECTS: increases the thirst field of the pet when the button is pressed
     private void handleFillWaterButton(JButton button, Pet pet, JLabel thirstLabel) {
 
         button.addActionListener(new ActionListener() {
@@ -199,6 +215,7 @@ public class PlayerProfileTab extends Tab {
         });
     }
 
+    // EFFECTS: increases the mood field of the pet and drops an accessory when the button is pressed
     private void handleInteractButton(JButton button, Pet pet, JLabel moodLabel) {
 
         button.addActionListener(new ActionListener() {
@@ -212,6 +229,7 @@ public class PlayerProfileTab extends Tab {
         });
     }
 
+    // EFFECTS: handels what happens when the equip accessory button is pressed
     private void handelEquipAccessButton(JButton button, Player player, Pet pet, JLabel equippedAccessLabel,
             int index) {
 
@@ -233,6 +251,7 @@ public class PlayerProfileTab extends Tab {
 
     }
 
+    // EFFECTS: create pop up window to select which accessories to equip
     private void setUpEquipAccessPanel(JPanel panel, Player player, Pet pet, JLabel equippedAccessLabel, int index) {
         panel.setLayout(null);
 
@@ -255,6 +274,7 @@ public class PlayerProfileTab extends Tab {
         handleEquipButton(equipButton, selectedAccess, pet, equippedAccessLabel, index);
     }
 
+    // EFFECTS: handels what happens when the equip button is pressed
     private void handleEquipButton(JButton button, JTextField selectedAccess, Pet pet, JLabel equippedAccessLabel,
             int index) {
 
@@ -272,6 +292,8 @@ public class PlayerProfileTab extends Tab {
 
     }
 
+
+    // EFFECTS: handels what happens when the unequip accessory button is pressed
     private void handelUnequipAccessButton(JButton button, Player player, Pet pet, JLabel equippedAccessLabel,
             int index) {
         button.addActionListener(new ActionListener() {
@@ -291,6 +313,7 @@ public class PlayerProfileTab extends Tab {
         });
     }
 
+    // EFFECTS: create pop up window to select which accessories to unequip
     private void setUpUnequipAccessPanel(JPanel panel, Player player, Pet pet, JLabel equippedAccessLabel, int index) {
         panel.setLayout(null);
 
@@ -313,6 +336,7 @@ public class PlayerProfileTab extends Tab {
         handleUnequipButton(unequipButton, selectedAccess, pet, equippedAccessLabel, index);
     }
 
+    // EFFECTS: handels what happens when the equip button is pressed
     private void handleUnequipButton(JButton button, JTextField selectedAccess, Pet pet, JLabel equippedAccessLabel,
             int index) {
         button.addActionListener(new ActionListener() {

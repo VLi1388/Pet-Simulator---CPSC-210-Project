@@ -8,8 +8,11 @@ import java.awt.event.ActionListener;
 import ui.ButtonNames;
 import ui.PetSimulatorGUI;
 
-public class LoadTab extends Tab{
+// class representing the functionalities of the save tab
+// this class was referenced off the SmartHome Project
+public class LoadTab extends Tab {
     
+    // sets up the user interface for the load tab, allows the user to load file
     public LoadTab(PetSimulatorGUI controller) {
         super(controller);
 

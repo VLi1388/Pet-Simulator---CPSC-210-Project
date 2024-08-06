@@ -8,8 +8,11 @@ import java.awt.event.ActionListener;
 import ui.ButtonNames;
 import ui.PetSimulatorGUI;
 
+// class representing the functionalities of the save tab
+// this class was referenced off the SmartHome Project
 public class SaveTab extends Tab {
 
+    // sets up the user interface for the save tab, allows the user to save file
     public SaveTab(PetSimulatorGUI controller) {
         super(controller);
 

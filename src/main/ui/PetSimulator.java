@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 
 import model.Accessory;
 import model.Pet;
@@ -13,6 +12,7 @@ import model.Player;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
+// a class that represents the simulator that is running
 public class PetSimulator {
     private static final String JSON_STORE = "./data/player.json";
 
@@ -21,22 +21,10 @@ public class PetSimulator {
 
     private Player player;
 
-    // private Scanner scanner;
-    // private boolean isSimulatorRunning;
-    // private boolean inWelcomeMenu;
-
-    // private boolean inPetsMenu;
-
-    // EFFECTS: creates an instance of the PetSimulator console ui application
-    // public PetSimulator() throws IOException, InterruptedException,
-    // FileNotFoundException {
+    // EFFECTS: creates an instance of the PetSimulator
     public PetSimulator() throws FileNotFoundException {
-        // this.scanner = new Scanner(System.in);
-
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
-
-        //loadPlayerProfile();
     }
 
     public Player getPlayer() {
@@ -53,10 +41,6 @@ public class PetSimulator {
         System.out.println("new player created");
     }
 
-    public void testPrint() {
-        System.out.println("printed something");
-    }
-
     // MODIFIES: p
     // EFFECTS: decreases the pets' status
     public void decreasePetStatus() {
@@ -68,10 +52,12 @@ public class PetSimulator {
     }
 
     // MODIFIES: player, newPet
-    // EFFECTS: asks the player for a pet that they want to adopt, and adopt that
-    // pet
-    public void adoptPet() {
+    // EFFECTS: adds a new pet to this player
+    public void adoptPet(String species, String name) {
+        Pet newPet = new Pet(species, name);
+        this.player.adoptPet(newPet);
 
+        System.out.println("New pet adopted");
     }
 
     // EFFECTS: saves the player profile to file
@@ -83,6 +69,17 @@ public class PetSimulator {
             System.out.println("Saved " + player.getName() + "'s profile to " + JSON_STORE);
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads player profile from file
+    public void loadPlayerProfile() {
+        try {
+            player = jsonReader.read();
+            System.out.println("Loaded " + player.getName() + "'s profile from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
         }
     }
 
@@ -111,21 +108,6 @@ public class PetSimulator {
         return inventory.toString();
     }
 
-    public String testString() {
-        return "String";
-    }
-
-    // MODIFIES: this
-    // EFFECTS: loads player profile from file
-    public void loadPlayerProfile() {
-        try {
-            player = jsonReader.read();
-            System.out.println("Loaded " + player.getName() + "'s profile from " + JSON_STORE);
-        } catch (IOException e) {
-            System.out.println("Unable to read from file: " + JSON_STORE);
-        }
-    }
-
     // MODIFIES: droppedAccessory, player
     // EFFECTS: when the player interacts with the pet, there is a chance for a
     // random accessory, the accessory is automatically obtained by the player
@@ -143,8 +125,7 @@ public class PetSimulator {
     // REQUIRES: selected accessories are within player.getObtainedAccessories();
     // MODIFIES: player, pet
     // EFFECTS: adds the selected accessories to the pets' equippedAccessories and
-    // removes the selected accessories
-    // from players' obtainedAccessories
+    // removes the selected accessories from players obtainedAccessories
     public void equipAccessories(Pet pet, String input) {
         List<String> inputs = new ArrayList<String>(Arrays.asList(input.split(",")));
 
@@ -169,8 +150,7 @@ public class PetSimulator {
     // REQUIRES: selected accessories are within pet.getEquippedAccessories();
     // MODIFIES: player, pet
     // EFFECTS: removes the selected accessories to the pets' equippedAccessories
-    // and adds the selected accessories
-    // from players' obtainedAccessories
+    // and adds the selected accessories to players obtainedAccessories
     public void unequipAccessories(Pet pet, String input) {
         List<String> inputs = new ArrayList<String>(Arrays.asList(input.split(",")));
 

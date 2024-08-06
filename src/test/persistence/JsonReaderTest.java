@@ -101,6 +101,7 @@ class JsonReaderTest extends JsonTest {
         }
     }
 
+    @SuppressWarnings("methodlength")
     @Test
     void testReaderThreePetsPlayerProfile() {
         // player has accessories, two pets have accessories one doesn't

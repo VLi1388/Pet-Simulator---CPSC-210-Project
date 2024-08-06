@@ -5,7 +5,9 @@ import ui.PetSimulatorGUI;
 import javax.swing.*;
 import java.awt.*;
 
-public abstract class Tab extends JPanel{
+// class representing the functionalities of a tab
+// this class was referenced off the SmartHome Project
+public abstract class Tab extends JPanel {
     private final PetSimulatorGUI controller;
 
     //REQUIRES: PetSimulatorUI controller that holds this tab

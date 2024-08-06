@@ -12,11 +12,13 @@ import java.io.IOException;
 import ui.ButtonNames;
 import ui.PetSimulatorGUI;
 
+// class representing the functionalities of the home tab
+// this class was referenced off the SmartHome Project
 public class HomeTab extends Tab {
     private static final String INIT_GREETING = "WELCOME TO PET SIMULATOR";
     private JLabel greeting;
 
-    //EFFECTS: constructs a home tab for console with buttons and a greeting
+    //EFFECTS: constructs a home tab for console with buttons and a welcome screen
     public HomeTab(PetSimulatorGUI controller) {
         super(controller);
 
@@ -26,7 +28,7 @@ public class HomeTab extends Tab {
         placeHomeButtons();
     }
 
-    //EFFECTS: creates greeting at top of console
+    //EFFECTS: creates and display the welsome screen
     private void placeWelcomeScreen() {
         greeting = new JLabel(INIT_GREETING, JLabel.CENTER);
         greeting.setSize(WIDTH, HEIGHT / 3);
@@ -45,7 +47,7 @@ public class HomeTab extends Tab {
         this.add(petLogo);
     }
 
-    //EFFECTS: creates Arrive and Leave buttons that change greeting message when clicked
+    //EFFECTS: creates new game and load game buttons
     private void placeHomeButtons() {
         JButton newGame = new JButton(ButtonNames.NEW_GAME.getValue());
         JButton loadGame = new JButton(ButtonNames.LOAD_GAME.getValue());
@@ -71,6 +73,7 @@ public class HomeTab extends Tab {
         this.add(buttonRow);
     }
 
+    // EFFECTS: create pop up window to create a new game
     private void createNewGame() {
         JFrame frame = new JFrame();
         frame.setSize(350, 200);
@@ -84,6 +87,7 @@ public class HomeTab extends Tab {
         frame.setVisible(true);
     }
 
+    // EFFECTS: set up pop up window to create a new game
     private void setUpNewGamePanel(JPanel panel) {
         panel.setLayout(null);
 
@@ -114,6 +118,7 @@ public class HomeTab extends Tab {
         panel.add(setUpCreateGameButton(playerNameText, petSpeciesText, petNameText));
     }
 
+    // EFFECTS: create button that builds the new player profile
     private JButton setUpCreateGameButton(JTextField playerNT, JTextField petST, JTextField petNT) {
         JButton createGame = new JButton("Create game");
         createGame.setBounds(10, 110, 120, 25);
