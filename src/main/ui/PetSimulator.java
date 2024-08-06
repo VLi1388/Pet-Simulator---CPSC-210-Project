@@ -105,7 +105,7 @@ public class PetSimulator {
         StringBuilder inventory = new StringBuilder();
 
         for (Accessory a : equippedAccess) {
-            inventory.append("\n").append(a.getName());
+            inventory.append("\n").append(a.getName()).append(", ");
         }
 
         return inventory.toString();
@@ -145,8 +145,25 @@ public class PetSimulator {
     // EFFECTS: adds the selected accessories to the pets' equippedAccessories and
     // removes the selected accessories
     // from players' obtainedAccessories
-    public void equipAccessories(Pet pet) {
+    public void equipAccessories(Pet pet, String input) {
+        List<String> inputs = new ArrayList<String>(Arrays.asList(input.split(",")));
 
+        List<Integer> indices = new ArrayList<>();
+        for (String s : inputs) {
+            int index = Integer.valueOf(s) - 1;
+            indices.add(index);
+        }
+
+        List<Accessory> accessToBeEquipped = new ArrayList<>();
+        for (int index : indices) {
+            accessToBeEquipped.add(player.getObtainedAccessories().get(index));
+        }
+
+        pet.equipAccessories(accessToBeEquipped);
+
+        for (Accessory a : accessToBeEquipped) {
+            player.removeAccesory(a);
+        }
     }
 
     // REQUIRES: selected accessories are within pet.getEquippedAccessories();
@@ -154,7 +171,24 @@ public class PetSimulator {
     // EFFECTS: removes the selected accessories to the pets' equippedAccessories
     // and adds the selected accessories
     // from players' obtainedAccessories
-    public void unequipAccessories(Pet pet) {
+    public void unequipAccessories(Pet pet, String input) {
+        List<String> inputs = new ArrayList<String>(Arrays.asList(input.split(",")));
 
+        List<Integer> indices = new ArrayList<>();
+        for (String s : inputs) {
+            int index = Integer.valueOf(s) - 1;
+            indices.add(index);
+        }
+
+        List<Accessory> accessToBeUnequipped = new ArrayList<>();
+        for (int index : indices) {
+            accessToBeUnequipped.add(pet.getEquippedAccessories().get(index));
+        }
+
+        pet.unequipAccessories(accessToBeUnequipped);
+
+        for (Accessory a : accessToBeUnequipped) {
+            player.addAccesory(a);
+        }
     }
 }

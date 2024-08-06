@@ -2,26 +2,28 @@ package ui.tabs;
 
 import javax.swing.*;
 
+import model.Pet;
 import model.Player;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.List;
 
 import ui.ButtonNames;
 import ui.PetSimulatorGUI;
 
 public class PlayerProfileTab extends Tab {
 
-    private JScrollPane reportPane;
-    private JTextArea reportText;
+    private JScrollPane playerAccessPane;
+    private JTextArea playerAccessText;
     private JLabel errorMessage;
 
     public PlayerProfileTab(PetSimulatorGUI controller) {
         super(controller);
 
-        setLayout(new GridLayout(3, 1));
+        setLayout(new GridLayout(4, 1));
 
         errorMessage = new JLabel("", JLabel.CENTER);
         errorMessage.setSize(WIDTH, HEIGHT / 3);
@@ -29,10 +31,6 @@ public class PlayerProfileTab extends Tab {
 
         displayObtainedAccessories();
         placeViewPetsButton();
-
-        // loadPet1(player);
-        // loadPet2(player);
-        // loadPet3(player);
     }
 
     private void displayObtainedAccessories() {
@@ -42,11 +40,11 @@ public class PlayerProfileTab extends Tab {
         JPanel reportBlock = new JPanel(new GridLayout(2, 1));
         reportBlock.setSize(PetSimulatorGUI.WIDTH - (PetSimulatorGUI.WIDTH / 5),
                 PetSimulatorGUI.HEIGHT - (PetSimulatorGUI.HEIGHT / 5));
-        reportPane = new JScrollPane(new JTextArea(6, 40));
-        reportText = new JTextArea("", 6, 40);
-        reportText.setVisible(true);
+        playerAccessPane = new JScrollPane(new JTextArea(6, 40));
+        playerAccessText = new JTextArea("", 6, 40);
+        playerAccessText.setVisible(true);
 
-        reportBlock.add(reportPane);
+        reportBlock.add(playerAccessPane);
 
         add(reportBlock);
     }
@@ -59,9 +57,9 @@ public class PlayerProfileTab extends Tab {
         checkInventory.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                reportText.setText(getController().getPetSimulator().displayObtainedAccrssories());
-                // reportText.setText("Some text");
-                reportPane.setViewportView(reportText);
+                playerAccessText.setText(
+                        "Obtained Accessories: " + getController().getPetSimulator().displayObtainedAccrssories());
+                playerAccessPane.setViewportView(playerAccessText);
             }
         });
 
@@ -115,73 +113,218 @@ public class PlayerProfileTab extends Tab {
     }
 
     private void setUpPetsPanel(JPanel panel, Player player, int index) {
+        Pet thisPet = player.getOwnedPets().get(index);
+
         panel.setLayout(null);
 
-        JLabel nameLabel = new JLabel("Name: " + player.getOwnedPets().get(index).getName());
+        JLabel nameLabel = new JLabel("Name: " + thisPet.getName());
         nameLabel.setBounds(10, 20, 120, 25);
         panel.add(nameLabel);
 
-        JLabel speciesLabel = new JLabel("Species: " + player.getOwnedPets().get(index).getSpecies());
+        JLabel speciesLabel = new JLabel("Species: " + thisPet.getSpecies());
         speciesLabel.setBounds(10, 50, 120, 25);
         panel.add(speciesLabel);
 
-        JLabel moodLabel = new JLabel("Mood: " + player.getOwnedPets().get(index).getMood());
+        JLabel moodLabel = new JLabel("Mood: " + thisPet.getMood());
         moodLabel.setBounds(10, 80, 120, 25);
         panel.add(moodLabel);
 
-        JLabel thirstLabel = new JLabel("Hunger: " + player.getOwnedPets().get(index).getHunger());
+        JLabel thirstLabel = new JLabel("Hunger: " + thisPet.getHunger());
         thirstLabel.setBounds(10, 110, 120, 25);
         panel.add(thirstLabel);
 
-        JLabel hungerLabel = new JLabel("Thirst: " + player.getOwnedPets().get(index).getThirst());
+        JLabel hungerLabel = new JLabel("Thirst: " + thisPet.getThirst());
         hungerLabel.setBounds(10, 140, 120, 25);
         panel.add(hungerLabel);
 
         JLabel equippedAccessLabel = new JLabel(
                 "Equipped Accessories: " + getController().getPetSimulator().displayEquippedAccess(index));
-        equippedAccessLabel.setBounds(10, 170, 280, 25);
+        equippedAccessLabel.setBounds(10, 170, 500, 25);
         panel.add(equippedAccessLabel);
+
+        placeActionButtons(panel, thisPet, hungerLabel, thirstLabel, moodLabel, player, equippedAccessLabel, index);
     }
 
-    // private void displayPet1(Player player, JPanel panel) {
+    private void placeActionButtons(JPanel panel, Pet pet, JLabel hungerLabel, JLabel thirstLabel, JLabel moodLabel,
+            Player player, JLabel equippedAccessLabel, int index) {
+        JButton feed = new JButton(ButtonNames.FEED.getValue());
+        feed.setBounds(10, 200, 100, 25);
+        panel.add(feed);
 
-    // JLabel nameLabel = new JLabel("Name: " +
-    // player.getOwnedPets().get(index).getName());
-    // nameLabel.setBounds(10, 20, 120, 25);
-    // panel.add(nameLabel);
+        JButton fillWater = new JButton(ButtonNames.FILL_WATER.getValue());
+        fillWater.setBounds(130, 200, 100, 25);
+        panel.add(fillWater);
 
-    // JLabel speciesLabel = new JLabel("Species: " +
-    // player.getOwnedPets().get(0).getSpecies());
-    // speciesLabel.setBounds(10, 50, 120, 25);
-    // panel.add(speciesLabel);
+        JButton interact = new JButton(ButtonNames.INTERACT.getValue());
+        interact.setBounds(250, 200, 100, 25);
+        panel.add(interact);
 
-    // JLabel moodLabel = new JLabel("Mood: " +
-    // player.getOwnedPets().get(0).getMood());
-    // moodLabel.setBounds(10, 80, 120, 25);
-    // panel.add(moodLabel);
+        JButton equipAccess = new JButton(ButtonNames.EQUIP_ACCESSORIES.getValue());
+        equipAccess.setBounds(10, 240, 180, 25);
+        panel.add(equipAccess);
 
-    // JLabel thirstLabel = new JLabel("Hunger: " +
-    // player.getOwnedPets().get(0).getHunger());
-    // thirstLabel.setBounds(10, 110, 120, 25);
-    // panel.add(thirstLabel);
+        JButton unequipAccess = new JButton(ButtonNames.UNEQUIP_ACCESSORIES.getValue());
+        unequipAccess.setBounds(200, 240, 180, 25);
+        panel.add(unequipAccess);
 
-    // JLabel hungerLabel = new JLabel("Thirst: " +
-    // player.getOwnedPets().get(0).getThirst());
-    // hungerLabel.setBounds(10, 140, 120, 25);
-    // panel.add(hungerLabel);
+        handleFeedButton(feed, pet, hungerLabel);
+        handleFillWaterButton(fillWater, pet, thirstLabel);
+        handleInteractButton(interact, pet, moodLabel);
 
-    // JLabel equippedAccessLabel = new JLabel(
-    // "Equipped Accessories: " +
-    // getController().getPetSimulator().displayEquippedAccess(1));
-    // equippedAccessLabel.setBounds(10, 170, 280, 25);
-    // panel.add(equippedAccessLabel);
-    // }
+        handelEquipAccessButton(equipAccess, player, pet, equippedAccessLabel, index);
+        handelUnequipAccessButton(unequipAccess, player, pet, equippedAccessLabel, index);
+    }
 
-    // private void displayPet2(Player player, JPanel panel) {
+    private void handleFeedButton(JButton button, Pet pet, JLabel hungerLabel) {
 
-    // }
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pet.applyHunger(30);
+                System.out.println(pet.getName() + "'s hunger increased by 30!");
+                hungerLabel.setText("Hunger: " + pet.getHunger());
+            }
+        });
+    }
 
-    // private void displayPet3(Player player, JPanel panel) {
+    private void handleFillWaterButton(JButton button, Pet pet, JLabel thirstLabel) {
 
-    // }
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pet.applyThirst(30);
+                System.out.println(pet.getName() + "'s thirst increased by 30!");
+                thirstLabel.setText("Thirst: " + pet.getThirst());
+            }
+        });
+    }
+
+    private void handleInteractButton(JButton button, Pet pet, JLabel moodLabel) {
+
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pet.applyMood(30);
+                System.out.println(pet.getName() + "'s mood increased by 30!");
+                getController().getPetSimulator().dropAccessory(pet);
+                moodLabel.setText("Mood: " + pet.getMood());
+            }
+        });
+    }
+
+    private void handelEquipAccessButton(JButton button, Player player, Pet pet, JLabel equippedAccessLabel,
+            int index) {
+
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame frame = new JFrame();
+                frame.setSize(500, 300);
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+                JPanel panel = new JPanel();
+                frame.add(panel);
+
+                setUpEquipAccessPanel(panel, player, pet, equippedAccessLabel, index);
+
+                frame.setVisible(true);
+            }
+        });
+
+    }
+
+    private void setUpEquipAccessPanel(JPanel panel, Player player, Pet pet, JLabel equippedAccessLabel, int index) {
+        panel.setLayout(null);
+
+        JLabel intro = new JLabel("Please select the accessories you want to equip your pet with:");
+        intro.setBounds(10, 20, 480, 25);
+        panel.add(intro);
+
+        JLabel instruction = new JLabel("(Select based on accessory order position, separated by \",\")");
+        instruction.setBounds(10, 55, 480, 25);
+        panel.add(instruction);
+
+        JTextField selectedAccess = new JTextField(20);
+        selectedAccess.setBounds(10, 90, 165, 25);
+        panel.add(selectedAccess);
+
+        JButton equipButton = new JButton("Equip");
+        equipButton.setBounds(10, 125, 100, 25);
+        panel.add(equipButton);
+
+        handleEquipButton(equipButton, selectedAccess, pet, equippedAccessLabel, index);
+    }
+
+    private void handleEquipButton(JButton button, JTextField selectedAccess, Pet pet, JLabel equippedAccessLabel,
+            int index) {
+
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String input = selectedAccess.getText();
+                getController().getPetSimulator().equipAccessories(pet, input);
+                equippedAccessLabel.setText(
+                        "Equipped Accessories: " + getController().getPetSimulator().displayEquippedAccess(index));
+                playerAccessText.setText(
+                        "Obtained Accessories: " + getController().getPetSimulator().displayObtainedAccrssories());
+            }
+        });
+
+    }
+
+    private void handelUnequipAccessButton(JButton button, Player player, Pet pet, JLabel equippedAccessLabel,
+            int index) {
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame frame = new JFrame();
+                frame.setSize(500, 300);
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+                JPanel panel = new JPanel();
+                frame.add(panel);
+
+                setUpUnequipAccessPanel(panel, player, pet, equippedAccessLabel, index);
+
+                frame.setVisible(true);
+            }
+        });
+    }
+
+    private void setUpUnequipAccessPanel(JPanel panel, Player player, Pet pet, JLabel equippedAccessLabel, int index) {
+        panel.setLayout(null);
+
+        JLabel intro = new JLabel("Please select the accessories you want to unequip your pet with:");
+        intro.setBounds(10, 20, 480, 25);
+        panel.add(intro);
+
+        JLabel instruction = new JLabel("(Select based on accessory order position, separated by \",\")");
+        instruction.setBounds(10, 55, 480, 25);
+        panel.add(instruction);
+
+        JTextField selectedAccess = new JTextField(20);
+        selectedAccess.setBounds(10, 90, 165, 25);
+        panel.add(selectedAccess);
+
+        JButton unequipButton = new JButton("Unequip");
+        unequipButton.setBounds(10, 125, 100, 25);
+        panel.add(unequipButton);
+
+        handleUnequipButton(unequipButton, selectedAccess, pet, equippedAccessLabel, index);
+    }
+
+    private void handleUnequipButton(JButton button, JTextField selectedAccess, Pet pet, JLabel equippedAccessLabel,
+            int index) {
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String input = selectedAccess.getText();
+                getController().getPetSimulator().unequipAccessories(pet, input);
+                equippedAccessLabel.setText(
+                        "Equipped Accessories: " + getController().getPetSimulator().displayEquippedAccess(index));
+                playerAccessText.setText(
+                        "Obtained Accessories: " + getController().getPetSimulator().displayObtainedAccrssories());
+            }
+        });
+    }
 }
