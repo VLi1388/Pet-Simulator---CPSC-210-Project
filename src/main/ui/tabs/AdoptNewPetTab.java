@@ -12,6 +12,7 @@ import ui.PetSimulatorGUI;
 
 // class that represents the functionalities of the adopt pet tab
 // this class was referenced off the SmartHome Project
+// some code in this class were taught by https://www.youtube.com/watch?v=iE8tZ0hn2Ws&t=2s
 public class AdoptNewPetTab extends Tab {
     private JLabel message;
     private JLabel instruction;

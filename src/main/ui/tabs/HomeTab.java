@@ -14,6 +14,7 @@ import ui.PetSimulatorGUI;
 
 // class representing the functionalities of the home tab
 // this class was referenced off the SmartHome Project
+// some code in this class were taught by https://www.youtube.com/watch?v=iE8tZ0hn2Ws&t=2s
 public class HomeTab extends Tab {
     private static final String INIT_GREETING = "WELCOME TO PET SIMULATOR";
     private JLabel greeting;
