@@ -1,41 +1,42 @@
 {
     "obtained accessories": [
+        {"name": "Red Bow Tie"},
+        {"name": "Galaxy Hat"},
         {"name": "Galaxy Hat"},
         {"name": "B&W Socks"},
-        {"name": "B&W Socks"},
-        {"name": "B&W Socks"},
-        {"name": "Red Bow Tie"},
         {"name": "Red Bow Tie"},
         {"name": "Galaxy Hat"}
     ],
     "owned pets": [
         {
-            "thirst": 98,
-            "mood": 98,
+            "thirst": 96,
+            "mood": 96,
             "species": "Cat",
             "name": "Milk",
+            "equipped accessories": [],
+            "hunger": 96
+        },
+        {
+            "thirst": 97,
+            "mood": 97,
+            "species": "Cow",
+            "name": "Joe",
             "equipped accessories": [
                 {"name": "Galaxy Hat"},
                 {"name": "B&W Socks"},
-                {"name": "Galaxy Hat"}
+                {"name": "Galaxy Hat"},
+                {"name": "B&W Socks"},
+                {"name": "Silver Pendant"}
             ],
-            "hunger": 98
+            "hunger": 97
         },
         {
-            "thirst": 90,
-            "mood": 99,
+            "thirst": 80,
+            "mood": 80,
             "species": "Dog",
             "name": "Bob",
             "equipped accessories": [],
-            "hunger": 90
-        },
-        {
-            "thirst": 72,
-            "mood": 100,
-            "species": "Cow",
-            "name": "Joe",
-            "equipped accessories": [{"name": "Galaxy Hat"}],
-            "hunger": 72
+            "hunger": 80
         }
     ],
     "name": "Billy"

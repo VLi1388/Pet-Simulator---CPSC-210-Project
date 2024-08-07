@@ -36,3 +36,72 @@ This game is intended to be used as a relaxation for anyone who needs a break fr
 - You can locate my visual component by looking at the *home* tab screen
 - You can save the state of my application by clicking the *save* button in the *save* tab
 - You can reload the state of my application by clicking the *load game* button in the *home* tab or the *load* button in the *load* tab
+
+## Phase 4: Task 2
+Actions performed: load save, view pet 1, unequip accessories from pet 1, view pet 2, equip accessories for pet 2, adopt pet 3, save game
+
+Tue Aug 06 17:27:38 PDT 2024
+Player profile loaded from file ./data/player.json
+
+Tue Aug 06 17:27:38 PDT 2024
+B&W Socks was added to Billy's inventory
+
+Tue Aug 06 17:27:38 PDT 2024
+Red Bow Tie was added to Billy's inventory
+
+Tue Aug 06 17:27:38 PDT 2024
+Galaxy Hat was added to Billy's inventory
+
+Tue Aug 06 17:27:38 PDT 2024
+Silver Pendant was added to Billy's inventory
+
+Tue Aug 06 17:27:38 PDT 2024
+Galaxy Hat was added to Billy's inventory
+
+Tue Aug 06 17:27:38 PDT 2024
+B&W Socks was added to Billy's inventory
+
+Tue Aug 06 17:27:38 PDT 2024
+Red Bow Tie was added to Billy's inventory
+
+Tue Aug 06 17:27:38 PDT 2024
+Created new pet: Milk
+
+Tue Aug 06 17:27:38 PDT 2024
+Milk was equipped with:   Galaxy Hat
+
+Tue Aug 06 17:27:38 PDT 2024
+Billy adopted a new pet: Milk
+
+Tue Aug 06 17:27:38 PDT 2024
+Created new pet: Joe
+
+Tue Aug 06 17:27:38 PDT 2024
+Joe was equipped with:   Galaxy Hat   B&W Socks   Galaxy Hat
+
+Tue Aug 06 17:27:38 PDT 2024
+Billy adopted a new pet: Joe
+
+Tue Aug 06 17:27:46 PDT 2024
+Milk was unequipped with:   Galaxy Hat
+
+Tue Aug 06 17:27:46 PDT 2024
+Galaxy Hat was added to Billy's inventory
+
+Tue Aug 06 17:28:14 PDT 2024
+Joe was equipped with:   B&W Socks   Silver Pendant
+
+Tue Aug 06 17:28:14 PDT 2024
+B&W Socks was removed from Billy's inventory
+
+Tue Aug 06 17:28:14 PDT 2024
+Silver Pendant was removed from Billy's inventory
+
+Tue Aug 06 17:28:32 PDT 2024
+Created new pet: Bob
+
+Tue Aug 06 17:28:32 PDT 2024
+Billy adopted a new pet: Bob
+
+Tue Aug 06 17:28:35 PDT 2024
+Billy's profile saved to file ./data/player.json
