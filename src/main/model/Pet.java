@@ -24,22 +24,25 @@ public class Pet implements Writable {
     private ArrayList<Drink> preferredDrinks = new ArrayList<>(); // list of preferred drinks
     private ArrayList<Interaction> preferredInteractions = new ArrayList<>(); // list of preferred interactions
 
-    // private ArrayList<String> discoveredPreferences; // list of discovered preferences
-    // remember to conver Food, Drink, Interaction objects to string using toString();
+    // private ArrayList<String> discoveredPreferences; // list of discovered
+    // preferences
+    // remember to conver Food, Drink, Interaction objects to string using
+    // toString();
     // mayber better to make into a method?
 
     /*
      * REQUIRES: name has a length > 0
      * EFFECTS: creates a pet with a name set to the given name;
-     *          sets the intial mood = (hunger + thirst) / 2 = 80,
-     *                          hunger = 80, 
-     *                          thirst = 80;
-     *          initializes an empty list of equipped accessories
-     *          initialzes a list of preferred food, drinks, and interactions, each consisting of 3 itmes,
-     *          where items are selected by random from the corresponding class;
+     * sets the intial mood = (hunger + thirst) / 2 = 80,
+     * hunger = 80,
+     * thirst = 80;
+     * initializes an empty list of equipped accessories
+     * initialzes a list of preferred food, drinks, and interactions, each
+     * consisting of 3 itmes,
+     * where items are selected by random from the corresponding class;
      * 
-     *          // TODO: 
-     *          initialzes an empty list of discovered preferences.
+     * // TODO:
+     * initialzes an empty list of discovered preferences.
      */
     public Pet(String species, String name) {
         this.species = species;
@@ -55,12 +58,15 @@ public class Pet implements Writable {
         this.theYPos = 0;
 
         generatePreferences();
+
+        EventLog.getInstance().logEvent(new Event("Created new pet: " + this.name));
+        // System.out.println("Created new pet: " + this.name);
     }
 
     // for future implementation, if I want to allow the player to
     // change the name of their pet
     // public void setName(String name) {
-    //     // allows the player to change the pets' name
+    // // allows the player to change the pets' name
     // }
 
     public String getSpecies() {
@@ -103,7 +109,7 @@ public class Pet implements Writable {
     }
 
     // public void setXCoord(int xCoord) {
-    //     this.xCoord = xCoord;
+    // this.xCoord = xCoord;
     // }
 
     public int getYCoord() {
@@ -111,9 +117,8 @@ public class Pet implements Writable {
     }
 
     // public void setYCoord(int yCoord) {
-    //     this.yCoord = yCoord;
+    // this.yCoord = yCoord;
     // }
-
 
     public ArrayList<Accessory> getEquippedAccessories() {
         return this.equippedAccessories;
@@ -133,43 +138,58 @@ public class Pet implements Writable {
 
     // MODIFIES: this
     // EFFECTS: updates this pets' mood based on current hunger and thirst
-    //          only if the newMood is larger than the current mood
-    //          mood is the average of hunger and thirst rounded down to 
-    //          nearest integer
+    // only if the newMood is larger than the current mood
+    // mood is the average of hunger and thirst rounded down to
+    // nearest integer
     public void updateMood() {
         int newMood = (hunger + thirst) / 2;
         if (newMood > mood) {
             this.mood = newMood;
         }
+
+        // EventLog.getInstance().logEvent(new Event(this.name + "'s mood was updated
+        // to" + this.mood));
+        // System.out.println(this.name + "'s mood was updated to" + this.mood);
     }
 
     // REQUIRES: 0 < applyMoodVal <= 100
     // MODIFIES: this
-    // EFFECTS: applies the given applyMoodVal to this pets' mood, 
-    //          this pets' mood cannot go below 0 and cannot
-    //          go above 100;
+    // EFFECTS: applies the given applyMoodVal to this pets' mood,
+    // this pets' mood cannot go below 0 and cannot
+    // go above 100;
     public void applyMood(int applyMoodVal) {
-        // mood can also be directly modified, a change in hunger or thirst always changes mood,
+        // mood can also be directly modified, a change in hunger or thirst always
+        // changes mood,
         // but a change in mood does not impact hunger or thirst
         if ((this.mood + applyMoodVal) > 100) {
             this.mood = 100;
         } else {
             this.mood += applyMoodVal;
         }
+
+        // EventLog.getInstance().logEvent(
+        // new Event(this.name + "'s mood was increased by " + applyMoodVal + ". Mood
+        // now is " + this.mood));
+        // System.out.println(this.name + "'s mood was increased by " + applyMoodVal +
+        // ". Mood now is " + this.mood);
     }
 
     // MODIFIES: this
     // EFFECTS: decrease mood by 1
     public void decreaseMood() {
         this.mood--;
+
+        // EventLog.getInstance().logEvent(new Event(this.name + "'s mood was decreased
+        // by 1"));
+        // System.out.println(this.name + "'s mood was decreased by 1");
     }
 
     // REQUIRES: 0 < applyHungerVal <= 100
     // MODIFIES: this
-    // EFFECTS: applies the given applyHungerVal to this pets' hunger, 
-    //          this pets' hunger cannot go below 0 and cannot
-    //          go above 100;
-    //          since hunger changed, mood should be updated
+    // EFFECTS: applies the given applyHungerVal to this pets' hunger,
+    // this pets' hunger cannot go below 0 and cannot
+    // go above 100;
+    // since hunger changed, mood should be updated
     public void applyHunger(int applyHungerVal) {
         if ((this.hunger + applyHungerVal) > 100) {
             this.hunger = 100;
@@ -178,20 +198,31 @@ public class Pet implements Writable {
             this.hunger += applyHungerVal;
             updateMood();
         }
+
+        // EventLog.getInstance().logEvent(
+        // new Event(
+        // this.name + "'s hunger was increased by " + applyHungerVal + ". Hunger now is
+        // " + this.hunger));
+        // System.out.println(this.name + "'s hunger was increased by " + applyHungerVal
+        // + ". Hunger now is " + this.hunger);
     }
 
     // MODIFIES: this
     // EFFECTS: decrease hunger by 1
     public void decreaseHunger() {
         this.hunger--;
+
+        // EventLog.getInstance().logEvent(new Event(this.name + "'s hunger was
+        // decreased by 1"));
+        // System.out.println(this.name + "'s hunger was decreased by 1");
     }
 
     // REQUIRES: 0 < applyThirstVal <= 100
     // MODIFIES: this
-    // EFFECTS: applies the given applyThirstVal to this pets' thirst, 
-    //          this pets' thirst cannot go below 0 and cannot
-    //          go above 100;
-    //          since thirst changed, mood should be updated
+    // EFFECTS: applies the given applyThirstVal to this pets' thirst,
+    // this pets' thirst cannot go below 0 and cannot
+    // go above 100;
+    // since thirst changed, mood should be updated
     public void applyThirst(int applyThirstVal) {
         if ((this.thirst + applyThirstVal) > 100) {
             this.thirst = 100;
@@ -200,29 +231,41 @@ public class Pet implements Writable {
             this.thirst += applyThirstVal;
             updateMood();
         }
+
+        // EventLog.getInstance().logEvent(
+        // new Event(
+        // this.name + "'s thirst was increased by " + applyThirstVal + ". Thirst now is
+        // " + this.thirst));
+        // System.out.println(this.name + "'s thirst was increased by " + applyThirstVal
+        // + ". Thirst now is " + this.thirst);
     }
 
     // MODIFIES: this
     // EFFECTS: decrease thirst by 1
     public void decreaseThirst() {
         this.thirst--;
+
+        // EventLog.getInstance().logEvent(new Event(this.name + "'s thirst was
+        // decreased by 1"));
+        // System.out.println(this.name + "'s thirst was decreased by 1");
     }
-    
-    // TODO: for future implementation, 
+
+    // TODO: for future implementation,
     // separate preferences into discovered and undiscovered
     // public ArrayList<String> getDiscoveredPreferences() {
-    //     return this.discoveredPreferences;
+    // return this.discoveredPreferences;
     // }
 
     // MODIFIES: this
-    // EFFECTS: generates a list of preferred food, drinks, and interactions at ramdom,
-    //          each consisting of 3
+    // EFFECTS: generates a list of preferred food, drinks, and interactions at
+    // ramdom,
+    // each consisting of 3
     public void generatePreferences() {
         // food preferences
         for (int i = 0; i < 3; i++) {
             preferredFood.add(new Food());
         }
-        
+
         // drink preferences
         for (int i = 0; i < 3; i++) {
             preferredDrinks.add(new Drink());
@@ -237,25 +280,42 @@ public class Pet implements Writable {
     // REQUIRES: accessory.size() > 0
     // MODIFIES: this
     // EFFECTS: adds the given list of accessories to this pet's equippedAccessories
-    //          in the order it was given, ignores any duplicates
+    // in the order it was given, ignores any duplicates
     public void equipAccessories(List<Accessory> accessories) {
+        StringBuilder access = new StringBuilder();
+
         for (Accessory a : accessories) {
             if (!equippedAccessories.contains(a)) {
                 equippedAccessories.add(a);
+                access.append("   ").append(a.getName());
             }
         }
+
+        String equippedAccess = access.toString();
+
+        EventLog.getInstance().logEvent(new Event(this.name + " was equipped with:" + equippedAccess));
+        // System.out.println(this.name + " was equipped with:" + equippedAccess);
     }
 
-    // REQUIRES: accessory.size() > 0; 
-    //           all items in accessories already exsit in equippedAccessories
-    //           // UI would ask player to "select" accessories out of equipped accessories
-    //           // to unequip them, so it is assumed that the 2nd condition is met
+    // REQUIRES: accessory.size() > 0;
+    // all items in accessories already exsit in equippedAccessories
+    // // UI would ask player to "select" accessories out of equipped accessories
+    // // to unequip them, so it is assumed that the 2nd condition is met
     // MODIFIES: this
-    // EFFECTS: removes the given list of accessories to this pet's equippedAccessories
+    // EFFECTS: removes the given list of accessories to this pet's
+    // equippedAccessories
     public void unequipAccessories(List<Accessory> accessories) {
+        StringBuilder access = new StringBuilder();
+
         for (Accessory a : accessories) {
             equippedAccessories.remove(a);
+            access.append("   ").append(a.getName());
         }
+
+        String unequippedAccess = access.toString();
+
+        EventLog.getInstance().logEvent(new Event(this.name + " was unequipped with:" + unequippedAccess));
+        // System.out.println(this.name + " was unequipped with:" + unequippedAccess);
     }
 
     // EFFECTS: saves this pet to a json file

@@ -38,7 +38,7 @@ public class PetSimulator {
         Pet initialPet = new Pet(initialPetSpecies, initialPetName);
         player = new Player(playerName, initialPet);
 
-        System.out.println("new player created");
+        // System.out.println("new player created");
     }
 
     // MODIFIES: p
@@ -57,7 +57,7 @@ public class PetSimulator {
         Pet newPet = new Pet(species, name);
         this.player.adoptPet(newPet);
 
-        System.out.println("New pet adopted");
+        // System.out.println("New pet adopted");
     }
 
     // EFFECTS: saves the player profile to file
@@ -66,7 +66,7 @@ public class PetSimulator {
             jsonWriter.open();
             jsonWriter.write(player);
             jsonWriter.close();
-            System.out.println("Saved " + player.getName() + "'s profile to " + JSON_STORE);
+            // System.out.println("Saved " + player.getName() + "'s profile to " + JSON_STORE);
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + JSON_STORE);
         }
@@ -77,7 +77,7 @@ public class PetSimulator {
     public void loadPlayerProfile() {
         try {
             player = jsonReader.read();
-            System.out.println("Loaded " + player.getName() + "'s profile from " + JSON_STORE);
+            // System.out.println("Loaded " + player.getName() + "'s profile from " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }
@@ -119,7 +119,7 @@ public class PetSimulator {
 
         Accessory droppedAccessory = new Accessory();
         this.player.addAccesory(droppedAccessory);
-        System.out.println(pet.getName() + " dropped a " + droppedAccessory.getName() + "!");
+        // System.out.println(pet.getName() + " dropped a " + droppedAccessory.getName() + "!");
     }
 
     // REQUIRES: selected accessories are within player.getObtainedAccessories();

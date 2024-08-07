@@ -15,23 +15,27 @@ public class Player implements Writable {
 
     /*
      * REQUIRES: name has a length > 0;
-     *           initialPet != null;
+     * initialPet != null;
      * EFFECTS: creates a player profile with a name set to the given name;
-     *          initializes a list of owned pets and adds the initial pet to it;
-     *          initialzes an empty list of obtained accessories
+     * initializes a list of owned pets and adds the initial pet to it;
+     * initialzes an empty list of obtained accessories
      */
     public Player(String name, Pet initialPet) {
         this.name = name;
         ownedPets = new ArrayList<>();
         ownedPets.add(initialPet);
         obtainedAccessories = new ArrayList<>();
+
+        EventLog.getInstance().logEvent(new Event("Created new player: " + this.name));
+        // System.out.println("Created new player: " + this.name);
     }
 
     /*
      * REQUIRES: name has a length > 0;
      * EFFECTS: creates a player profile with a name set to the given name;
-     *          initializes a list of empty owned pets;
-     *          initialzes an empty list of obtained accessories
+     * initializes a list of empty owned pets;
+     * initialzes an empty list of obtained accessories
+     * only used for reading from save
      */
     public Player(String name) {
         this.name = name;
@@ -51,7 +55,6 @@ public class Player implements Writable {
         return this.obtainedAccessories;
     }
 
-
     /*
      * REQUIRES: canAdopt() is true
      * MODIFIES: this
@@ -59,9 +62,12 @@ public class Player implements Writable {
      */
     public void adoptPet(Pet newPet) {
         ownedPets.add(newPet);
+
+        EventLog.getInstance().logEvent(new Event(this.name + " adopted a new pet: " + newPet.getName()));
+        // System.out.println(this.name + " adopted a new pet: " + newPet.getName());
     }
 
-    /* 
+    /*
      * REQUIRES: ownedPets.size() > 0 AND ownedPets contains the given pet
      * // giveAwayPet would only be called on if the player selected "give away"
      * // under a specific pets' profile, so we can assume the requires clause
@@ -70,15 +76,18 @@ public class Player implements Writable {
      */
     public void giveAwayPet(Pet pet) {
         ownedPets.remove(pet);
+
+        EventLog.getInstance().logEvent(new Event(this.name + " gave away the pet: " + pet.getName()));
+        // System.out.println(this.name + " gave away the pet: " + pet.getName());
     }
     // TODO: add this option for the player in the ui menu
 
     /*
      * EFFECTS: returnes whether or not the player can adopt a new pet:
-     *          If all currently owned pets have mood, hunger, and thirst
-     *          >= 90 AND ownedPets.size() < 3, then the player can adopt 
-     *          a new pet;
-     *          If the player has no pet, return true
+     * If all currently owned pets have mood, hunger, and thirst
+     * >= 90 AND ownedPets.size() < 3, then the player can adopt
+     * a new pet;
+     * If the player has no pet, return true
      */
     public boolean canAdopt() {
         // first check if we're at capaity of 3 pets
@@ -99,18 +108,28 @@ public class Player implements Writable {
 
     /*
      * MODIFIES: this
-     * EFFECTS: adds the given accesories to the list of already obtained accessories
+     * EFFECTS: adds the given accesories to the list of already obtained
+     * accessories
      */
     public void addAccesory(Accessory newAccesory) {
         obtainedAccessories.add(newAccesory);
+
+        EventLog.getInstance()
+                .logEvent(new Event(newAccesory.getName() + " was added to " + this.name + "'s inventory"));
+        // System.out.println(newAccesory.getName() + " was added to " + this.name + "'s inventory");
     }
 
     /*
      * MODIFIES: this
-     * EFFECTS: removes the given accesories to the list of already obtained accessories
+     * EFFECTS: removes the given accesories to the list of already obtained
+     * accessories
      */
     public void removeAccesory(Accessory newAccesory) {
         obtainedAccessories.remove(newAccesory);
+
+        EventLog.getInstance()
+                .logEvent(new Event(newAccesory.getName() + " was removed from " + this.name + "'s inventory"));
+        // System.out.println(newAccesory.getName() + " was removed from " + this.name + "'s inventory");
     }
 
     // REQUIRES: spot is either 1,2,3
@@ -130,6 +149,7 @@ public class Player implements Writable {
         json.put("name", name);
         json.put("obtained accessories", accessoriesToJson());
         json.put("owned pets", ownedPetsToJson());
+
         return json;
     }
 

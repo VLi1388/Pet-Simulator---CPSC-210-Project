@@ -29,6 +29,9 @@ public class Accessory implements Writable {
         int selectIndex = rand.nextInt(4);
 
         this.name = namesPool.get(selectIndex);
+
+        EventLog.getInstance().logEvent(new Event("New accessory \"" + this.name + "\" was created"));
+        // System.out.println("New accessory \"" + this.name + "\" was created");
     }
 
     // EFFECTS: creates an accessory with the given name

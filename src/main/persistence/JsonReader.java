@@ -27,6 +27,10 @@ public class JsonReader {
     public Player read() throws IOException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
+
+        EventLog.getInstance().logEvent(new Event("Player profile loaded from file " + source));
+        // System.out.println("Player profile loaded from file " + source);
+
         return parsePlayer(jsonObject);
     }
 

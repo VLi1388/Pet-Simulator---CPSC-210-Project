@@ -1,8 +1,7 @@
 package persistence;
 
-import model.Player;
+import model.*;
 import org.json.JSONObject;
-
 
 import java.io.*;
 
@@ -19,7 +18,8 @@ public class JsonWriter {
     }
 
     // MODIFIES: this
-    // EFFECTS: opens writer; throws FileNotFoundException if destination file cannot
+    // EFFECTS: opens writer; throws FileNotFoundException if destination file
+    // cannot
     // be opened for writing
     public void open() throws FileNotFoundException {
         writer = new PrintWriter(new File(destination));
@@ -30,6 +30,9 @@ public class JsonWriter {
     public void write(Player player) {
         JSONObject json = player.toJson();
         saveToFile(json.toString(TAB));
+
+        EventLog.getInstance().logEvent(new Event(player.getName() + "'s profile saved to file " + destination));
+        // System.out.println(player.getName() + "'s profile saved to file " + destination);
     }
 
     // MODIFIES: this

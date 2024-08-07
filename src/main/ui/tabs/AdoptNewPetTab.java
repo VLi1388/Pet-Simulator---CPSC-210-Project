@@ -53,7 +53,7 @@ public class AdoptNewPetTab extends Tab {
 
                 if (player.canAdopt() == false) {
                     message.setText("Sorry, you cannot adopt a pet for now.");
-                    instruction.setText("(All pets must have all stats >= 90)");
+                    instruction.setText("(You must have less than 3 pets and all pets must have all stats >= 90)");
                 } else {
                     adoptPetPopUp();
                     instruction.setText("");

@@ -197,7 +197,7 @@ public class PlayerProfileTab extends Tab {
             @Override
             public void actionPerformed(ActionEvent e) {
                 pet.applyHunger(30);
-                System.out.println(pet.getName() + "'s hunger increased by 30!");
+                // System.out.println(pet.getName() + "'s hunger increased by 30!");
                 hungerLabel.setText("Hunger: " + pet.getHunger());
             }
         });
@@ -210,7 +210,7 @@ public class PlayerProfileTab extends Tab {
             @Override
             public void actionPerformed(ActionEvent e) {
                 pet.applyThirst(30);
-                System.out.println(pet.getName() + "'s thirst increased by 30!");
+                // System.out.println(pet.getName() + "'s thirst increased by 30!");
                 thirstLabel.setText("Thirst: " + pet.getThirst());
             }
         });
@@ -223,7 +223,7 @@ public class PlayerProfileTab extends Tab {
             @Override
             public void actionPerformed(ActionEvent e) {
                 pet.applyMood(30);
-                System.out.println(pet.getName() + "'s mood increased by 30!");
+                // System.out.println(pet.getName() + "'s mood increased by 30!");
                 getController().getPetSimulator().dropAccessory(pet);
                 moodLabel.setText("Mood: " + pet.getMood());
             }
